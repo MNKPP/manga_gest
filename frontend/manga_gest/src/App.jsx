@@ -1,7 +1,10 @@
 import './App.css'
-import { Register } from '../components/index.js';
+import { Register, Login } from '../components/index.js';
 export default function App() {
     return (
-        <Register />
+        <div>
+            <Register />
+            <Login />
+        </div>
     )
 }
