@@ -1,8 +1,13 @@
 import s from './Register.module.scss';
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { registerSchema } from '../validators/authentification.validator.js'
+
 
 export default function Register() {
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, formState: { errors }} = useForm({
+        resolver: yupResolver(registerSchema),
+    });
 
     const onSubmit = (data) => console.log(data);
 
@@ -18,21 +23,25 @@ export default function Register() {
                     <div className={s.groupInput}>
                         <label htmlFor="input-username">Pseudo :</label>
                         <input {...register("username")} id="input-username" type="text"/>
+                        <p>{errors.username?.message}</p>
                     </div>
 
                     <div className={s.groupInput}>
                         <label htmlFor="input-email">Email :</label>
                         <input {...register("email")} id="input-email" type="email"/>
+                        <p>{errors.email?.message}</p>
                     </div>
 
                     <div className={s.groupInput}>
                         <label htmlFor="input-password">Mot de passe :</label>
                         <input {...register("password")} id="input-password" type="password"/>
+                        <p>{errors.password?.message}</p>
                     </div>
 
                     <div className={s.groupInput}>
                         <label htmlFor="input-confirm">Confirmler mot de passe :</label>
                         <input {...register("confirm")} id="input-confirm" type="password"/>
+                        <p>{errors.confirm?.message}</p>
                     </div>
 
                     <button type="submit">S'enregistrer</button>
