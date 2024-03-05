@@ -23,28 +23,28 @@ export default function Register() {
                     <div className={s.groupInput}>
                         <label htmlFor="input-username">Pseudo :</label>
                         <input {...register("username")} id="input-username" type="text"/>
-                        <p>{errors.username?.message}</p>
+                        <p className="errorMessage">{errors.username?.message}</p>
                     </div>
 
                     <div className={s.groupInput}>
                         <label htmlFor="input-email">Email :</label>
                         <input {...register("email")} id="input-email" type="email"/>
-                        <p>{errors.email?.message}</p>
+                        <p className="errorMessage">{errors.email?.message}</p>
                     </div>
 
                     <div className={s.groupInput}>
                         <label htmlFor="input-password">Mot de passe :</label>
                         <input {...register("password")} id="input-password" type="password"/>
-                        <p>{errors.password?.message}</p>
+                        <p className="errorMessage">{errors.password?.message}</p>
                     </div>
 
                     <div className={s.groupInput}>
-                        <label htmlFor="input-confirm">Confirmler mot de passe :</label>
+                        <label htmlFor="input-confirm">Confirmer mot de passe :</label>
                         <input {...register("confirm")} id="input-confirm" type="password"/>
-                        <p>{errors.confirm?.message}</p>
+                        <p className="errorMessage">{errors.confirm?.message}</p>
                     </div>
 
-                    <button type="submit">S'enregistrer</button>
+                    <button className="authButton" type="submit">S'enregistrer</button>
                 </form>
             </div>
         </section>

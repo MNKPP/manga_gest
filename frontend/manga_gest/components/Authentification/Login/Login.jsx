@@ -23,7 +23,7 @@ export default function Login() {
                         <label htmlFor="input-password">Mot de passe :</label>
                         <input {...register("password")} id="input-password" type="password"/>
                     </div>
-
+                    
                     <button type="submit">Se connecter</button>
                 </form>
             </div>

@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --error-message: crimson;
+}
+
+h1 {
+    @apply text-4xl;
+}
+
+.authButton {
+    @apply text-xl text-black bg-white font-light py-2 px-4 rounded;
+}
+
+.errorMessage {
+    color: var(--error-message);
+}
