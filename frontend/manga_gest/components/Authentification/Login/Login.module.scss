@@ -1,0 +1,17 @@
+.container {
+  h1 {
+    @apply text-center;
+  }
+  form {
+
+    .groupInput {
+      @apply flex flex-col justify-between mb-2;
+      label {
+        @apply text-xl tracking-wider mb-1;
+      }
+      input {
+        @apply p-2 outline-0;
+      }
+    }
+  }
+}

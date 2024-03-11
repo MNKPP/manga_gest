@@ -9,10 +9,11 @@ export default function Register() {
         resolver: yupResolver(registerSchema),
     });
 
+    // TODO: Réaliser la requête vers le serveur
     const onSubmit = (data) => console.log(data);
 
     return (
-        <section className={s.container}>
+        <div className={s.container}>
             <div className={s.leftSide}>
 
             </div>
@@ -47,6 +48,6 @@ export default function Register() {
                     <button className="authButton" type="submit">S'enregistrer</button>
                 </form>
             </div>
-        </section>
+        </div>
     )
 }

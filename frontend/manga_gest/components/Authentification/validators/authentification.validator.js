@@ -20,7 +20,18 @@ const registerSchema = yup.object({
 
 }).required('Tous les champs sont obligatoires')
 
+const loginSchema = yup.object().shape({
+    email: yup
+        .string()
+        .email('Adresse email invalide')
+        .required('Le champ adresse email est obligatoire'),
+    password: yup
+        .string()
+        .min(8, 'Le mot de passe doit avoir au moins 8 caractères')
+        .required('Le champ mot de passe est obligatoire')
+}).required('Les champs sont obligatoires');
 
 export {
-    registerSchema
+    registerSchema,
+    loginSchema
 }
