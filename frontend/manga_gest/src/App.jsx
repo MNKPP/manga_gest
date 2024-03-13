@@ -1,9 +1,9 @@
-import './App.css'
+import s from './App.module.scss'
 import { Authentification } from '../components/index.js';
 export default function App() {
     return (
-        <div>
+        <main className={s.main}>
             <Authentification />
-        </div>
+        </main>
     )
 }

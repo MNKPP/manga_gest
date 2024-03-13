@@ -1,13 +1,13 @@
 .container {
   h1 {
-    @apply text-center;
+    @apply text-center mb-5;
   }
   form {
 
     .groupInput {
-        @apply flex flex-col justify-between mb-2;
+        @apply flex flex-col justify-between mb-10;
       label {
-        @apply text-xl tracking-wider mb-1;
+        @apply text-xl tracking-wider mb-1.5;
       }
       input {
         @apply p-2 outline-0;

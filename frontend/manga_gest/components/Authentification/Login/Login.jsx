@@ -1,8 +1,10 @@
 import s from './Login.module.scss';
+import { SwitchAuthButton } from '../../index.js';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../validators/authentification.validator.js";
-export default function Login() {
+
+export default function Login({switchAuth, isToggle}) {
     const {register, handleSubmit, formState: { errors }} = useForm({
         resolver: yupResolver(registerSchema),
     });
@@ -32,6 +34,7 @@ export default function Login() {
                     </div>
 
                     <button className="authButton" type="submit">Se connecter</button>
+                    <SwitchAuthButton switchAuth={switchAuth} isToggle={isToggle} />
                 </form>
             </div>
         </div>

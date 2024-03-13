@@ -1,18 +1,18 @@
+import s from './Authentification.module.scss';
 import { Login, Register } from '../index.js';
 import { useState } from "react";
 
 export default function Authentification() {
-    const [toggle, setToggle] = useState(true);
+    const [isToggle, setToggle] = useState(true);
 
-    const handleSubmit = (e) => {
+    const switchAuth = (e) => {
         e.preventDefault();
-        setToggle(!toggle);
+        setToggle(!isToggle);
     }
 
     return (
-        <section>
-            { toggle ? <Login /> : <Register /> }
-            <button onClick={handleSubmit}>{ toggle ? "Se connecter" : "S'inscrire"}</button>
+        <section className={s.section}>
+            { isToggle ? <Login switchAuth={switchAuth} isToggle={isToggle}/> : <Register switchAuth={switchAuth}/> }
         </section>
     )
 }

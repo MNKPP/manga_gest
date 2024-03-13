@@ -2,9 +2,10 @@ import s from './Register.module.scss';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from '../validators/authentification.validator.js'
+import {SwitchAuthButton} from "../../index.js";
 
 
-export default function Register() {
+export default function Register({ switchAuth}) {
     const {register, handleSubmit, formState: { errors }} = useForm({
         resolver: yupResolver(registerSchema),
     });
@@ -46,6 +47,7 @@ export default function Register() {
                     </div>
 
                     <button className="authButton" type="submit">S'enregistrer</button>
+                    <SwitchAuthButton switchAuth={switchAuth} />
                 </form>
             </div>
         </div>
