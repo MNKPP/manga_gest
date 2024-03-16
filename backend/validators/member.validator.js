@@ -3,7 +3,7 @@ import * as yup from 'yup';
 const memberRegisterSchema = yup.object().shape({
     username: yup.string()
         .min(4)
-        .max(20)
+        .max(50)
         .required()
         .trim(),
 

@@ -4,7 +4,7 @@ import { Sequelize, DataTypes } from 'sequelize';
 export default  (sequelize) => {
     const Member = sequelize.define('Member',{
         username: {
-            type: DataTypes.STRING(20),
+            type: DataTypes.STRING(50),
             allowNull: false
         },
         email: {
@@ -12,7 +12,7 @@ export default  (sequelize) => {
             allowNull: false
         },
         password: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(100),
             allowNull: false
         }
     }, {
