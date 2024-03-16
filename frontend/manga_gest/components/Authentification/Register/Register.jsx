@@ -46,8 +46,10 @@ export default function Register({ switchAuth}) {
                         <p className="errorMessage">{errors.confirm?.message}</p>
                     </div>
 
-                    <button className="authButton" type="submit">S'enregistrer</button>
-                    <SwitchAuthButton switchAuth={switchAuth} />
+                    <div className={s.buttons}>
+                        <button className="authButton" type="submit">S'enregistrer</button>
+                        <SwitchAuthButton switchAuth={switchAuth}/>
+                    </div>
                 </form>
             </div>
         </div>

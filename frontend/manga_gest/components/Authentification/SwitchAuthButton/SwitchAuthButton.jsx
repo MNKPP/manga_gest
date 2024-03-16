@@ -1,7 +1,7 @@
-
+import s from './SwithAuthButton.module.scss';
 export default function SwitchAuthButton({switchAuth, isToggle}) {
 
     return (
-        <button className="authButton" onClick={switchAuth}>{isToggle ? "S'inscrire" : "Se connecter"}</button>
+        <a className={s.link} onClick={switchAuth}>{isToggle ? "Vous n'êtes pas inscrit ? " : "Vous êtes déjà inscrit ?"}</a>
     )
 }

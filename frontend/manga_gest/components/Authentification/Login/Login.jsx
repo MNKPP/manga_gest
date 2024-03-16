@@ -33,8 +33,10 @@ export default function Login({switchAuth, isToggle}) {
                         <p className="errorMessage">{ errors.password?.message}</p>
                     </div>
 
-                    <button className="authButton" type="submit">Se connecter</button>
-                    <SwitchAuthButton switchAuth={switchAuth} isToggle={isToggle} />
+                    <div className={s.buttons}>
+                        <button className="authButton" type="submit">Se connecter</button>
+                        <SwitchAuthButton switchAuth={switchAuth} isToggle={isToggle}/>
+                    </div>
                 </form>
             </div>
         </div>
