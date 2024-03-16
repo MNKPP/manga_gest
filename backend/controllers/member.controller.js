@@ -2,27 +2,31 @@ import memberService from "../services/member.service.js";
 import {memberLoginSchema, memberRegisterSchema} from "../validators/member.validator.js";
 
 const authController = {
-    // TODO: Implement the controllers
     login: async (req, res) => {
         const { username, password } = req.body;
 
         try {
             await memberLoginSchema.validate({ username, password });
         } catch (error) {
-            res.status(400).json({
-                errorMessage: 'Invalid data'
-            });
+            res.status(400)
+                .json({
+                    errorMessage: 'Invalid data'
+                });
             return;
         }
 
-        try {
-            const member = await memberService.login({ username, password });
-            res.status(200).json(member);
-        } catch (error) {
-            res.status(401).json({
-                errorMessage: error.message
-            });
+        const member = await memberService.login({ username, password });
+
+        if (!member) {
+            res.status(401)
+                .json({
+                    errorMessage: "Authentication failed"
+                });
+            return;
         }
+
+        res.status(200)
+            .json(member);
     },
 
     register: async (req, res) => {
