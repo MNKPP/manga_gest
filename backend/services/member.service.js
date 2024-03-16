@@ -34,8 +34,9 @@ const memberService = {
         return new MemberDto(member);
     },
 
-    checkUsername: async (username) => {
-        throw new Error('Not implemented');
+    checkEmail: async (email) => {
+        const member = db.Member.findOne({ where: { email }});
+        return member;
     }
 }
 

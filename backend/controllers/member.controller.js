@@ -28,6 +28,14 @@ const authController = {
     register: async (req, res) => {
         const data = req.body;
 
+        if (await memberService.checkEmail(data.email)) {
+            res.status(400)
+                .json({
+                    errorMessage: 'Email already exist'
+                })
+            return;
+        }
+
         let validationData;
         try {
             validationData = await memberRegisterSchema.validate(data)
