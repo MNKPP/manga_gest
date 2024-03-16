@@ -4,15 +4,28 @@ import {MemberDto} from "../dto/member.dto.js";
 
 const memberService = {
 
-    login: async () => {
-        throw new Error('Not implemented');
+    login: async ({username, password}) => {
+        const member = await db.Member.findOne({ where: { username } });
+
+        if (!member) {
+            throw new Error('Invalid email or password');
+        }
+
+        const isPasswordValid = await argon2.verify(member.password, password);
+
+        if (!isPasswordValid) {
+            throw new Error('Invalid username or password');
+        }
+
+        return new MemberDto(member);
     },
 
-    register: async (actorData) => {
-        const pwdHash = await argon2.hash(actorData.password)
+    register: async ({username, email, password}) => {
+        const pwdHash = await argon2.hash(password)
 
         const modifiedActorData = {
-            ...actorData,
+            username,
+            email,
             password: pwdHash
         };
 
@@ -21,7 +34,7 @@ const memberService = {
         return new MemberDto(member);
     },
 
-    checkEmail: async (email) => {
+    checkUsername: async (username) => {
         throw new Error('Not implemented');
     }
 }

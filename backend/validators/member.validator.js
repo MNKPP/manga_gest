@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-const memberRegisterSchema = yup.object().shape({
+export const memberRegisterSchema = yup.object().shape({
     username: yup.string()
         .min(4)
         .max(50)
@@ -16,11 +16,11 @@ const memberRegisterSchema = yup.object().shape({
         .trim(),
 
     confirm: yup.string()
-        .oneOf(yup.ref('password'), null)
+        .oneOf([yup.ref('password'), null])
         .required()
 })
 
-const memberLoginSchema = yup.object().shape({
+export const memberLoginSchema = yup.object().shape({
     username: yup.string()
         .trim()
         .required(),
@@ -28,8 +28,3 @@ const memberLoginSchema = yup.object().shape({
     password: yup.string()
         .required()
 })
-
-export {
-    memberRegisterSchema,
-    memberLoginSchema
-};
