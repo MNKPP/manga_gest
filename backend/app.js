@@ -5,6 +5,7 @@ import express from 'express';
 import morgan from 'morgan';
 import mainRouter from "./routes/index.js";
 import db from './models/index.js';
+import {authTokenMiddleware} from "./middlewares/auth.middleware.js";
 
 const { NODE_ENV, PORT } = process.env;
 
@@ -28,6 +29,7 @@ if(NODE_ENV === 'dev') {
 
 app.use(express.json());
 app.use(morgan('tiny'));
+app.use(authTokenMiddleware());
 
 app.use('/api', mainRouter);
 

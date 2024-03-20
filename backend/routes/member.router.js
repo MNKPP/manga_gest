@@ -1,5 +1,6 @@
 import express from "express";
 import memberController from "../controllers/member.controller.js";
+import {authorizeMiddleware} from "../middlewares/auth.middleware.js";
 
 const memberRouter = express.Router();
 
@@ -8,5 +9,9 @@ memberRouter.route('/login')
 
 memberRouter.route('/register')
     .post(memberController.register)
+
+memberRouter.get('/protected', authorizeMiddleware() , async (req, res) => {
+    res.sendStatus(200)
+})
 
 export default memberRouter;
