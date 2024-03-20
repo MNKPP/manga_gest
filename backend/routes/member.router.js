@@ -10,7 +10,7 @@ memberRouter.route('/login')
 memberRouter.route('/register')
     .post(memberController.register)
 
-memberRouter.get('/protected', authorizeMiddleware() , async (req, res) => {
+memberRouter.get('/protected', authorizeMiddleware('user') , async (req, res) => {
     res.sendStatus(200)
 })
 
