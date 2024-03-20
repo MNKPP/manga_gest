@@ -14,6 +14,11 @@ export default  (sequelize) => {
         password: {
             type: DataTypes.STRING(100),
             allowNull: false
+        },
+        role: {
+            type: DataTypes.STRING(4),
+            allowNull: false,
+            defaultValue: "user"
         }
     }, {
         tableName: 'Member',

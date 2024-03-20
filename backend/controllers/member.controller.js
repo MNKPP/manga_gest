@@ -1,5 +1,7 @@
 import memberService from "../services/member.service.js";
-import {memberLoginSchema, memberRegisterSchema} from "../validators/member.validator.js";
+import { memberLoginSchema, memberRegisterSchema } from "../validators/member.validator.js";
+import { generateToken } from "../utils/jwt.utils.js";
+
 
 const authController = {
     login: async (req, res) => {
@@ -25,8 +27,10 @@ const authController = {
             return;
         }
 
+        const token = await generateToken(member);
+
         res.status(200)
-            .json(member);
+            .json(token);
     },
 
     register: async (req, res) => {
