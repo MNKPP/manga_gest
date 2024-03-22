@@ -1,6 +1,5 @@
 import { Sequelize, DataTypes } from 'sequelize';
 
-
 export default  (sequelize) => {
     const Member = sequelize.define('Member',{
         username: {

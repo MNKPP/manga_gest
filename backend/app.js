@@ -23,7 +23,7 @@ if(NODE_ENV === 'dev') {
     //db.sequelize.sync({ alter: { drop: false } });
 
     //? Méthode pour forcer les objet de la DB (Dernier recours - En DEV!)
-    // db.sequelize.sync({ force: true });
+    db.sequelize.sync({ force: true });
 }
 
 
