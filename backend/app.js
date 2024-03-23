@@ -5,7 +5,7 @@ import express from 'express';
 import morgan from 'morgan';
 import mainRouter from "./routes/index.js";
 import db from './models/index.js';
-import {authTokenMiddleware} from "./middlewares/auth.middleware.js";
+import { authTokenMiddleware } from "./middlewares/auth.middleware.js";
 
 const { NODE_ENV, PORT } = process.env;
 
@@ -23,7 +23,7 @@ if(NODE_ENV === 'dev') {
     //db.sequelize.sync({ alter: { drop: false } });
 
     //? Méthode pour forcer les objet de la DB (Dernier recours - En DEV!)
-    db.sequelize.sync({ force: true });
+    // db.sequelize.sync({ force: true });
 }
 
 

@@ -31,7 +31,7 @@ const authController = {
         const token = await generateToken(member);
 
         res.status(200)
-            .json(token);
+            .json({token: token});
     },
 
     register: async (req, res) => {
