@@ -35,8 +35,7 @@ const memberService = {
     },
 
     checkEmail: async (email) => {
-        const member = db.Member.findOne({ where: { email }});
-        return member;
+        return await db.Member.findOne({ where: { email }});
     }
 }
 

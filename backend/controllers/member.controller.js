@@ -1,4 +1,5 @@
 import memberService from "../services/member.service.js";
+import animeListService from "../services/animeList.service.js";
 import { memberLoginSchema, memberRegisterSchema } from "../validators/member.validator.js";
 import { generateToken } from "../utils/jwt.utils.js";
 
@@ -63,6 +64,8 @@ const authController = {
                     errorMessage: 'Error on member register'
                 });
         }
+
+        await animeListService.addDefaultList(member.id);
 
         res.status(201)
             .json(validationData);

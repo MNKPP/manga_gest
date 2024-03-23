@@ -18,8 +18,16 @@ db.Member = memberBuilder(sequelize);
 db.Anime = animeBuilder(sequelize);
 db.AnimeList = animeListBuilder(sequelize);
 
-db.Member.hasMany(db.AnimeList);
-db.AnimeList.hasMany(db.Anime);
+db.Member.hasMany(db.AnimeList, {
+    foreignKey: {name: 'memberId',
+    allowNull: false
+    },
+});
+db.AnimeList.hasMany(db.Anime, {
+    foreignKey: {name: 'animeListId',
+        allowNull: false
+    }
+});
 
 
 export default db;
