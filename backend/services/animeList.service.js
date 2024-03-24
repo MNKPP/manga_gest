@@ -1,5 +1,6 @@
 import db from '../models/index.js';
 import { AnimeListDto } from "../dto/animeList.dto.js";
+import {Error} from "sequelize";
 
 const animeListService = {
 
@@ -24,16 +25,28 @@ const animeListService = {
     },
 
     delete: async (animeLisId) => {
-        const nbRowDeleted = await db.AnimeList.destroy({where: {id: animeLisId}});
+        const nbRowDeleted = await db.AnimeList.destroy({
+            where: {id: animeLisId}
+        });
 
         return nbRowDeleted;
     },
 
-    update: async () => {
+    update: async (animeListData, animeListId) => {
+        const [updateCount] = await db.AnimeList.update(animeListData, {
+            where: {id: animeListId}
+        });
 
+        if (!updateCount) {
+            throw new Error('AnimeList Not Updated');
+        }
+
+        const updatedData = await db.AnimeList.findOne({ where: animeListId })
+
+        return new AnimeListDto(updatedData);
     },
 
-    getById: async () => {
+    getById: async (animeListId) => {
 
     },
 

@@ -1,6 +1,5 @@
 import animeListService from "../services/animeList.service.js";
 import { animeListValidator } from "../validators/animeList.validator.js";
-import res from "express/lib/response.js";
 
 const animeListController = {
 
@@ -59,7 +58,32 @@ const animeListController = {
     },
 
     update: async (req, res) => {
-        res.sendStatus(501);
+        const data = req.body;
+        const animeListId = parseInt(req.params.id);
+
+        let validationData;
+        try {
+            validationData = await animeListValidator.validate(data);
+        } catch (e) {
+            res.status(400)
+                .json({
+                    errorMessage: 'Invalid data'
+                })
+            return;
+        }
+
+        const animeList = await animeListService.update(validationData, animeListId);
+
+        if (!animeList) {
+            res.status(403)
+                .json({
+                    errorMessage: 'Failed to update anime list'
+                })
+            return;
+        }
+
+        res.status(200)
+            .json(animeList)
     },
 
     getById: async (req, res) => {

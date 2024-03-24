@@ -8,6 +8,7 @@ const memberRouter = express.Router();
 
 memberRouter.route('/:id')
     .post(authorizeMiddleware(ROLE) ,animeListController.add)
+    .put(authorizeMiddleware(ROLE) ,animeListController.update)
     .delete(authorizeMiddleware(ROLE) , animeListController.delete)
 
 
