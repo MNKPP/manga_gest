@@ -23,8 +23,10 @@ const animeListService = {
         return new AnimeListDto(animeListCreated);
     },
 
-    delete: async () => {
+    delete: async (animeLisId) => {
+        const nbRowDeleted = await db.AnimeList.destroy({where: {id: animeLisId}});
 
+        return nbRowDeleted;
     },
 
     update: async () => {
