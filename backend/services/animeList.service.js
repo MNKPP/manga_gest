@@ -47,11 +47,23 @@ const animeListService = {
     },
 
     getById: async (animeListId) => {
+        const animeList = await db.AnimeList.findOne({ where: { id: animeListId } });
 
+        if (!animeList) {
+            throw new Error('AnimeList Not Found');
+        }
+
+        return new AnimeListDto(animeList);
     },
 
     getAll: async () => {
+        const animeLists = await db.AnimeList.findAll()
 
+        if (animeLists.length === 0) {
+            throw new Error('No AnimeLists Found');
+        }
+
+        return animeLists.map(animeList => new AnimeListDto(animeList));
     }
 }
 

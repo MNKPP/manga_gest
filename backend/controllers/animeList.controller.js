@@ -1,5 +1,6 @@
 import animeListService from "../services/animeList.service.js";
 import { animeListValidator } from "../validators/animeList.validator.js";
+import res from "express/lib/response.js";
 
 const animeListController = {
 
@@ -87,11 +88,36 @@ const animeListController = {
     },
 
     getById: async (req, res) => {
-        res.sendStatus(501);
+        const animeListId = parseInt(req.params.id);
+
+        const animeList = await animeListService.getById(animeListId);
+
+        if (!animeList) {
+            res.status(404)
+                .json({
+                    errorMessage: 'AnimeList Not Found'
+                });
+            return;
+        }
+
+        res.status(200)
+            .json(animeList);
     },
 
     getAll: async (req, res) => {
-        res.sendStatus(501);
+        const animeLists = await animeListService.getAll();
+
+        if (animeLists.length === 0) {
+            res.status(404)
+                .json({
+                    errorMessage: 'AnimeLists Not Found'
+                });
+            return;
+        }
+
+        res.status(200)
+            .json(animeLists);
+
         },
 }
 
