@@ -1,6 +1,5 @@
 import animeListService from "../services/animeList.service.js";
 import { animeListValidator } from "../validators/animeList.validator.js";
-import res from "express/lib/response.js";
 
 const animeListController = {
 
@@ -36,14 +35,6 @@ const animeListController = {
 
     delete: async (req, res) => {
         const animeListId = parseInt(req.params.id);
-
-        if (animeListId <= 4) {
-            res.status(403)
-                .json({
-                    errorMessage: 'Cannot delete default anime list'
-                });
-            return;
-        }
 
         const isDeleted = await animeListService.delete(animeListId);
 

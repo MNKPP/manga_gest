@@ -23,9 +23,17 @@ const animeListService = {
         return new AnimeListDto(animeListCreated);
     },
 
-    delete: async (animeLisId) => {
+    delete: async (animeListId) => {
+        const animeListFound = await db.AnimeList.findOne({
+            where: {id: animeListId},
+        })
+
+        if (animeListFound.isDefault) {
+            throw new Error('Cannot delete default anime list');
+        }
+
         const nbRowDeleted = await db.AnimeList.destroy({
-            where: {id: animeLisId}
+            where: {id: animeListId}
         });
 
         return nbRowDeleted;
