@@ -105,7 +105,9 @@ const animeListController = {
     },
 
     getAll: async (req, res) => {
-        const animeLists = await animeListService.getAll();
+        const memberId = req.token.id;
+
+        const animeLists = await animeListService.getAll(memberId);
 
         if (animeLists.length === 0) {
             res.status(404)
@@ -118,7 +120,7 @@ const animeListController = {
         res.status(200)
             .json(animeLists);
 
-        },
+    },
 }
 
 export default animeListController;

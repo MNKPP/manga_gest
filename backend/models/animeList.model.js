@@ -6,6 +6,11 @@ export default  (sequelize) => {
             type: DataTypes.STRING(100),
             allowNull: false
         },
+        isDefault: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true,
+            allowNull: false
+        }
     }, {
         tableName: 'AnimeList',
         timestamps: true

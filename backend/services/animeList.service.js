@@ -1,6 +1,5 @@
 import db from '../models/index.js';
 import { AnimeListDto } from "../dto/animeList.dto.js";
-import {Error} from "sequelize";
 
 const animeListService = {
 
@@ -14,7 +13,7 @@ const animeListService = {
 
     add: async (animeListData, memberId) => {
         const [animeListCreated, created] = await db.AnimeList.findOrCreate({
-            where: {name: animeListData.name, memberId}
+            where: {name: animeListData.name, memberId, isDefault: false}
         });
 
         if (!created) {
@@ -56,8 +55,10 @@ const animeListService = {
         return new AnimeListDto(animeList);
     },
 
-    getAll: async () => {
-        const animeLists = await db.AnimeList.findAll()
+    getAll: async (memberId) => {
+        const animeLists = await db.AnimeList.findAll({
+            where : {memberId: memberId},
+        })
 
         if (animeLists.length === 0) {
             throw new Error('No AnimeLists Found');
