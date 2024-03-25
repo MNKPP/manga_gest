@@ -23,7 +23,20 @@ db.Member.hasMany(db.AnimeList, {
     allowNull: false
     },
 });
+
+db.AnimeList.belongsTo(db.Member, {
+    foreignKey: {name: 'memberId',
+        allowNull: false
+    }
+});
+
 db.AnimeList.hasMany(db.Anime, {
+    foreignKey: {name: 'animeListId',
+        allowNull: false
+    }
+});
+
+db.Anime.belongsTo(db.AnimeList, {
     foreignKey: {name: 'animeListId',
         allowNull: false
     }
