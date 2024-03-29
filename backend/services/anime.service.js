@@ -1,24 +1,15 @@
+import db from "../models/index.js";
+
 const animeService = {
+    getById: async (id) => {
+        console.log(id)
+        const anime = await db.Anime.findOne({ where: { id: id } });
 
-    add: async () => {
+        if (!anime) {
+            throw new Error("Anime not found");
+        }
 
-    },
-
-    delete: async () => {
-
-    },
-
-    update: async () => {
-
-    },
-
-    getById: async () => {
-
-    },
-
-    getAll: async () => {
-
+        return anime;
     }
 }
-
 export default animeService;

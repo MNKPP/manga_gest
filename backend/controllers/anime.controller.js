@@ -1,23 +1,21 @@
+import animeService from "../services/anime.service.js";
+
 const animeController = {
-
-    add: async (req, res) => {
-
-    },
-
-    delete: async (req, res) => {
-
-    },
-
-    update: async (req, res) => {
-
-    },
-
     getById: async (req, res) => {
+        const animeId = parseInt(req.params.id);
 
-    },
+        const anime = await animeService.getById(animeId);
 
-    getAll: async (req, res) => {
+        if (!anime) {
+            res.status(404)
+                .json({
+                    errorMessage: 'No anime found.'
+                })
+            return;
+        }
 
+        res.status(200)
+            .json(anime);
     }
 }
 
