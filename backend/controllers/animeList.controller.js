@@ -161,6 +161,23 @@ const animeListController = {
         }
 
         res.sendStatus(204);
+    },
+
+    getAllAnimeInList: async (req, res) => {
+        const animeListId = parseInt(req.params.id);
+
+        const animeList = await animeListService.getAllAnimeInList(animeListId);
+
+        if (!animeList) {
+            res.status(404)
+                .json({
+                    errorMessage: 'AnimeList Not Found'
+                });
+            return;
+        }
+
+        res.status(200)
+            .json(animeList);
     }
 }
 

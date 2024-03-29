@@ -103,6 +103,16 @@ const animeListService = {
         });
 
         return nbRowDeleted;
+    },
+
+    getAllAnimeInList: async (animeListId) => {
+        const animeList = await db.Anime.findAll({ where: { animeListId } });
+
+        if (!animeList) {
+            throw new Error('AnimeList Not Found');
+        }
+
+        return animeList.map(anime => new AnimeDto(anime));
     }
 }
 

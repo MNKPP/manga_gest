@@ -29,6 +29,13 @@ export default  (sequelize) => {
         trailer: {
             type: DataTypes.STRING(150),
             allowNull: true
+        },
+        animeListId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'AnimeList',
+                key: 'id'
+            }
         }
     }, {
         tableName: 'Anime',

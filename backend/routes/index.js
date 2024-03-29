@@ -5,6 +5,6 @@ import animeListRouter from "./animeList.router.js";
 const mainRouter = express.Router();
 
 mainRouter.use('/auth', memberRouter);
-mainRouter.use('/animeList', animeListRouter)
+mainRouter.use('/animeList', animeListRouter);
 
 export default mainRouter;
