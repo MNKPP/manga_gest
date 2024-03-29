@@ -1,5 +1,6 @@
 import db from '../models/index.js';
 import { AnimeListDto } from "../dto/animeList.dto.js";
+import {AnimeDto} from "../dto/anime.dto.js";
 
 const animeListService = {
 
@@ -73,6 +74,18 @@ const animeListService = {
         }
 
         return animeLists.map(animeList => new AnimeListDto(animeList));
+    },
+
+    addAnimeInList: async (animeData, animeListId) => {
+        const [animeCreated, created] = await db.Anime.findOrCreate({
+            where: {...animeData, animeListId}
+        });
+
+        if (!created) {
+            throw new Error('Anime already in list');
+        }
+
+        return new AnimeDto(animeCreated);
     }
 }
 

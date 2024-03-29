@@ -1,5 +1,8 @@
 import animeListService from "../services/animeList.service.js";
 import { animeListValidator } from "../validators/animeList.validator.js";
+import req from "express/lib/request.js";
+import {animeValidator} from "../validators/anime.validator.js";
+import res from "express/lib/response.js";
 
 const animeListController = {
 
@@ -112,6 +115,36 @@ const animeListController = {
             .json(animeLists);
 
     },
+
+    addAnimeInList: async (req, res) => {
+        const data = req.body;
+        const animeListId = parseInt(req.params.id);
+
+        let validationData;
+        try {
+            validationData = await animeValidator.validate(data);
+        } catch (e) {
+            res.status(400)
+                .json({
+                    errorMessage: 'Invalid data'
+                })
+            return;
+        }
+
+        const anime = await animeListService.addAnimeInList(validationData, animeListId);
+
+        if (!anime) {
+            res.status(403)
+                .json({
+                    errorMessage: 'Failed to add anime to list'
+                })
+            return;
+        }
+
+        res.status(201)
+            .location(`/api/animes/${anime.id}`)
+            .json(anime);
+    }
 }
 
 export default animeListController;

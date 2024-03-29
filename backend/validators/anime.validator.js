@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-export const animeListValidator = yup.object().shape({
+export const animeValidator = yup.object().shape({
     title: yup.string(),
 
     studio: yup.string(),
