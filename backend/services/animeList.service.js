@@ -1,6 +1,7 @@
 import db from '../models/index.js';
 import { AnimeListDto } from "../dto/animeList.dto.js";
 import {AnimeDto} from "../dto/anime.dto.js";
+import {Error} from "sequelize";
 
 const animeListService = {
 
@@ -86,6 +87,22 @@ const animeListService = {
         }
 
         return new AnimeDto(animeCreated);
+    },
+
+    deleteAnimeInList: async (animeId, animeListId) => {
+        const animeInList = await db.Anime.findOne({
+            where: {id: animeId, animeListId}
+        })
+
+        if (!animeInList) {
+            throw new Error('Anime not found in list');
+        }
+
+        const nbRowDeleted = await db.Anime.destroy({
+            where: {id: animeId, animeListId}
+        });
+
+        return nbRowDeleted;
     }
 }
 

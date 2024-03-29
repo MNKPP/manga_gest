@@ -144,6 +144,23 @@ const animeListController = {
         res.status(201)
             .location(`/api/animes/${anime.id}`)
             .json(anime);
+    },
+
+    deleteAnimeInList: async (req, res) => {
+        const animeId = parseInt(req.params.animeId);
+        const animeListId = parseInt(req.params.id);
+
+        const nbRowDeleted = await animeListService.deleteAnimeInList(animeId, animeListId);
+
+        if (nbRowDeleted === 0) {
+            res.status(404)
+                .json({
+                    errorMessage: 'Anime not found in list'
+                });
+            return;
+        }
+
+        res.sendStatus(204);
     }
 }
 

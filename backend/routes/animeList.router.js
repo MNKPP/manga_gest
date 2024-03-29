@@ -15,6 +15,9 @@ memberRouter.route('/:id')
 memberRouter.route('/:id/anime')
     .post(authorizeMiddleware(ROLE) ,animeListController.addAnimeInList)
 
+memberRouter.route('/:id/anime/:animeId')
+    .delete(authorizeMiddleware(ROLE) ,animeListController.deleteAnimeInList)
+
 memberRouter.route('/')
     .get(authorizeMiddleware(ROLE), animeListController.getAll)
 
