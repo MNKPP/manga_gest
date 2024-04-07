@@ -1,7 +1,6 @@
 import db from '../models/index.js';
 import { AnimeListDto } from "../dto/animeList.dto.js";
 import {AnimeDto} from "../dto/anime.dto.js";
-import {Error} from "sequelize";
 
 const animeListService = {
 

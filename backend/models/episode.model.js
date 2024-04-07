@@ -6,7 +6,7 @@ export default  (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        userId: {
+        memberId: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
