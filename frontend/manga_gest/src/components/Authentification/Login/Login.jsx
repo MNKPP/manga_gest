@@ -2,15 +2,26 @@ import s from './Login.module.scss';
 import { SwitchAuthButton } from '../../index.js';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { registerSchema } from "../validators/authentification.validator.js";
+import {loginSchema} from "../validators/authentification.validator.js";
+import {loginService} from "../../../services/auth.service.js";
+import {useNavigate} from "react-router-dom";
 
-export default function Login({switchAuth, isToggle}) {
+export default function Login({switchAuth, isToggle, onReceiveToken}) {
     const {register, handleSubmit, formState: { errors }} = useForm({
-        resolver: yupResolver(registerSchema),
+        resolver: yupResolver(loginSchema),
     });
+    const navigate = useNavigate();
 
-    // TODO: Réaliser la requête vers le serveur
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = (data) => {
+        loginService(data).then(res => {
+            if (res.status === 200) {
+                onReceiveToken(res.data.token);
+                navigate("/dashboard");
+            } else {
+                console.log("Login failed");
+            }
+        });
+    };
 
     return (
         <div className={s.container}>

@@ -51,7 +51,7 @@ const authController = {
         } catch (error) {
             res.status(400)
                 .json({
-                    errorMessage: 'Invalid data'
+                    errorMessage: 'Invalid data',
                 })
             return;
         }

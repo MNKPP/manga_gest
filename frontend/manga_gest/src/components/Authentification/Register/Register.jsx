@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from '../validators/authentification.validator.js'
 import {SwitchAuthButton} from "../../index.js";
+import { registerService } from "../../../services/auth.service.js";
 
 
 export default function Register({ switchAuth}) {
@@ -10,8 +11,15 @@ export default function Register({ switchAuth}) {
         resolver: yupResolver(registerSchema),
     });
 
-    // TODO: Réaliser la requête vers le serveur
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = (data) => {
+        registerService(data).then((res) => {
+            if (res) {
+                console.log("Register successfully");
+            } else {
+                console.log("Register failure");
+            }
+        });
+    };
 
     return (
         <div className={s.container}>

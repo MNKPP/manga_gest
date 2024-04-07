@@ -3,6 +3,7 @@ import 'express-async-errors';
 
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import mainRouter from "./routes/index.js";
 import db from './models/index.js';
 import { authTokenMiddleware } from "./middlewares/auth.middleware.js";
@@ -29,6 +30,7 @@ if(NODE_ENV === 'dev') {
 
 app.use(express.json());
 app.use(morgan('tiny'));
+app.use(cors());
 app.use(authTokenMiddleware());
 
 app.use('/api', mainRouter);

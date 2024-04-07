@@ -2,7 +2,7 @@ import s from './Authentification.module.scss';
 import { Login, Register } from '../index.js';
 import { useState } from "react";
 
-export default function Authentification() {
+export default function Authentification({onReceiveToken}) {
     const [isToggle, setToggle] = useState(true);
 
     const switchAuth = (e) => {
@@ -12,7 +12,7 @@ export default function Authentification() {
 
     return (
         <section className={s.section}>
-            { isToggle ? <Login switchAuth={switchAuth} isToggle={isToggle}/> : <Register switchAuth={switchAuth}/> }
+            { isToggle ? <Login switchAuth={switchAuth} isToggle={isToggle} onReceiveToken={onReceiveToken}/> : <Register switchAuth={switchAuth}/> }
         </section>
     )
 }

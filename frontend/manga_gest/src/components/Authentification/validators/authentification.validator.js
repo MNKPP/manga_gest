@@ -21,10 +21,9 @@ const registerSchema = yup.object({
 }).required('Tous les champs sont obligatoires')
 
 const loginSchema = yup.object().shape({
-    email: yup
+    username: yup
         .string()
-        .email('Adresse email invalide')
-        .required('Le champ adresse email est obligatoire'),
+        .required('Le champ pseudo est obligatoire'),
     password: yup
         .string()
         .min(8, 'Le mot de passe doit avoir au moins 8 caractères')

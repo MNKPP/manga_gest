@@ -1,14 +1,19 @@
-import {Outlet} from "react-router-dom";
-import Dashboard from "../../container/Dashboard.jsx";
-import {Authentification} from "../index.js";
+import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import { Authentification } from "../index.js";
 
+const PrivateRoutes = ({ token }) => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-const PrivateRoutes = () => {
-    const token = true;
+    useEffect(() => {
+        if (token) {
+            setIsAuthenticated(true);
+        }
+    }, [token]);
 
     return (
         <>
-            { token ? <Outlet /> : <Authentification />}
+            { isAuthenticated ? <Outlet /> : <Authentification />}
         </>
     );
 }
