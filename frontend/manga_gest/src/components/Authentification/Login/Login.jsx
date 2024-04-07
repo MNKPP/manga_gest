@@ -5,26 +5,32 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {loginSchema} from "../validators/authentification.validator.js";
 import {loginService} from "../../../services/auth.service.js";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
+import DisplayError from "../DisplayError/DisplayError.jsx";
 
 export default function Login({switchAuth, isToggle, onReceiveToken}) {
     const {register, handleSubmit, formState: { errors }} = useForm({
         resolver: yupResolver(loginSchema),
     });
     const navigate = useNavigate();
+    const [formErrors, setFormErrors] = useState(false);
 
     const onSubmit = (data) => {
-        loginService(data).then(res => {
-            if (res.status === 200) {
+        loginService(data)
+            .then(res => {
                 onReceiveToken(res.data.token);
                 navigate("/dashboard");
-            } else {
-                console.log("Login failed");
-            }
+            }).catch(e => {
+                setFormErrors(true);
+                throw new Error(e.response.data);
         });
     };
 
     return (
         <div className={s.container}>
+
+            {formErrors && <DisplayError message="Le pseudo ou le mot de passe est incorecte"/>}
+
             <div className={s.leftSide}>
 
             </div>
@@ -41,7 +47,7 @@ export default function Login({switchAuth, isToggle, onReceiveToken}) {
                     <div className={s.groupInput}>
                         <label htmlFor="input-password">Mot de passe :</label>
                         <input {...register("password")} id="input-password" type="password"/>
-                        <p className="errorMessage">{ errors.password?.message}</p>
+                        <p className="errorMessage">{errors.password?.message}</p>
                     </div>
 
                     <div className={s.buttons}>
