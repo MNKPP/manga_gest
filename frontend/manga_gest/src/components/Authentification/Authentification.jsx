@@ -11,8 +11,10 @@ export default function Authentification({onReceiveToken}) {
     }
 
     return (
-        <section className={s.section}>
-            { isToggle ? <Login switchAuth={switchAuth} isToggle={isToggle} onReceiveToken={onReceiveToken}/> : <Register switchAuth={switchAuth}/> }
-        </section>
+        <main className={s['main']}>
+            <section className={s.section}>
+                { isToggle ? <Login switchAuth={switchAuth} isToggle={isToggle} onReceiveToken={onReceiveToken}/> : <Register switchAuth={switchAuth}/> }
+            </section>
+        </main>
     )
 }

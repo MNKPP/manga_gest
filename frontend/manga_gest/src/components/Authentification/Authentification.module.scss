@@ -1,3 +1,7 @@
-.section {
-  @apply w-full px-3;
+.main {
+  @apply flex justify-center items-center grow;
+
+  .section {
+    @apply w-full px-3;
+  }
 }
