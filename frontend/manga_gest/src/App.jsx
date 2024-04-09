@@ -3,6 +3,9 @@ import { BrowserRouter as Router,Route,Routes } from "react-router-dom";
 import { Authentification, PrivateRoutes } from './components/index.js';
 import Dashboard from "./container/Dashboard.jsx";
 import {useState} from "react";
+import Header from "./components/Header/Header.jsx";
+import Footer from "./components/Footer/Footer.jsx";
+
 
 export default function App() {
     const [token, setToken] = useState(null);
@@ -12,7 +15,7 @@ export default function App() {
     }
 
     return (
-        <main className={s.main}>
+        <>
             <Router>
                 <Routes>
                     <Route path="/" element={<Authentification onReceiveToken={handleReceiveToken} />} />
@@ -21,6 +24,6 @@ export default function App() {
                     </Route>
                 </Routes>
             </Router>
-        </main>
+        </>
     )
 }

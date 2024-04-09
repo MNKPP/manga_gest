@@ -12,6 +12,10 @@
     padding: 0;
 }
 
+#root {
+    @apply min-h-screen flex flex-col
+}
+
 h1 {
     @apply text-4xl;
 }
