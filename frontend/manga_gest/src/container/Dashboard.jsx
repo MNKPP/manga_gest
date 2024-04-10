@@ -1,10 +1,12 @@
 import PrivateLayout from "../components/PrivateLayout/PrivateLayout.jsx";
+import SearchBar from "../components/SearchBar/SearchBar.jsx";
 
 const Dashboard = () => {
 
     return (
         <PrivateLayout>
-            <h1>Dashboard</h1>
+            <SearchBar />
+
         </PrivateLayout>
     )
 }
