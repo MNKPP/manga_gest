@@ -1,0 +1,12 @@
+.anime-founded-item {
+	@apply flex flex-row-reverse justify-between w-80 mt-3;
+
+	h3 {
+		@apply text-sm mr-3;
+	}
+
+	img {
+		@apply w-16 rounded;
+
+	}
+}
