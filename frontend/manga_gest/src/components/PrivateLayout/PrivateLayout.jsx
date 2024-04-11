@@ -2,10 +2,10 @@ import s from './PrivateLayout.module.scss';
 import Header from "../Header/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
 
-const PrivateLayout = ({ children }) => {
+const PrivateLayout = ({ children, clickListAction }) => {
     return (
         <>
-            <Header />
+            <Header clickListAction={clickListAction} />
             <main className={s['main']}>
                 { children }
             </main>

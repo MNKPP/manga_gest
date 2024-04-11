@@ -1,7 +1,11 @@
 .header {
-	@apply bg-red-500;
+	@apply flex justify-between items-center bg-red-500;
 
 	h1 {
 		@apply text-3xl font-light p-3 text-white;
+	}
+
+	.menu-logo {
+		@apply p-3 cursor-pointer;
 	}
 }

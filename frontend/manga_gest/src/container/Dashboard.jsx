@@ -1,12 +1,14 @@
 import PrivateLayout from "../components/PrivateLayout/PrivateLayout.jsx";
 import SearchBar from "../components/SearchBar/SearchBar.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {AnimeFoundedList} from "../components/DisplayAnimeFounded/AnimeFoundedList.jsx";
 import AnimeInListItem from "../components/AnimeInListItem/AnimeInListItem.jsx";
+import {fetchAnimeLists} from "../services/anileList.service.js";
 
 const Dashboard = () => {
     const [animeListFounded, setAnimeListFounded] = useState([]);
     const [isFounded, setIsFounded] = useState(false);
+    const [listId, setListId] = useState(null);
 
     const dataFounded = (data) => {
         if (data) {
@@ -15,12 +17,15 @@ const Dashboard = () => {
         }
     }
 
+    const onListClickAction = (id) => {
+        setListId(id);
+    }
+
     return (
-        <PrivateLayout>
+        <PrivateLayout clickListAction={onListClickAction}>
             <SearchBar onFoundedAnime={dataFounded}/>
             {isFounded && <AnimeFoundedList animeList={animeListFounded}/>}
-            <AnimeInListItem />
-            {/*TODO : Mettre AnimeFoundedList en mode absolute pour qu'il ne sois pas dans le Dashboard*/}
+            <AnimeInListItem listId={listId}/>
         </PrivateLayout>
     )
 }

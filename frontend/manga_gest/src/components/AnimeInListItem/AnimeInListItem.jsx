@@ -2,20 +2,20 @@ import s from './AnimeInListItem.module.scss';
 import {useEffect, useState} from "react";
 import {fetchAnimeInList} from "../../services/anileList.service.js";
 
-const AnimeInListItem = () => {
+const AnimeInListItem = ({ listId }) => {
     const [animeInList, setAnimeInList] = useState(null);
 
     const token = localStorage.getItem("token");
 
     useEffect(() => {
-        fetchAnimeInList(1, token)
+        fetchAnimeInList(listId, token)
             .then((data) => {
                 setAnimeInList(data);
             })
             .catch((error) => {
                 throw new Error(error.message);
             })
-    }, []);
+    }, [listId, token]);
 
     return (
         <div className={s['anime-list']}>
