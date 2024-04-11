@@ -1,0 +1,11 @@
+.anime-in-list-item {
+	@apply flex mt-5;
+
+	.buttons {
+		@apply flex;
+
+		button {
+			@apply mx-20
+		}
+	}
+}

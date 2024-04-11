@@ -20,7 +20,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Authentification onReceiveToken={handleReceiveToken} />} />
                     <Route element={<PrivateRoutes token={token} />}>
-                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/dashboard" element={<Dashboard token={token}/>} />
                     </Route>
                 </Routes>
             </Router>

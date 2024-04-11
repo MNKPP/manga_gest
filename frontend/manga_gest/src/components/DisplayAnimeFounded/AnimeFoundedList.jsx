@@ -1,5 +1,6 @@
 import s from './AnimeFoundedList.module.scss';
-export const AnimeFoundedItem = ({ title, image, score, studio, genre}) => {
+import AddToAnimeListButton from "../AddToAnimeListButton/AddToAnimeListButton.jsx";
+export const AnimeFoundedItem = ({ title, image, score, studio, genres}) => {
 
     return (
         <div className={s['anime-founded-item']}>
@@ -8,7 +9,8 @@ export const AnimeFoundedItem = ({ title, image, score, studio, genre}) => {
                 <h3>{title}</h3>
                 <p>Studio : {studio}</p>
                 <p>Score : {score}</p>
-                <p>{genre}</p>
+                <p>{genres}</p>
+                <AddToAnimeListButton />
             </div>
         </div>
     )
@@ -23,7 +25,7 @@ export const AnimeFoundedList = ({ animeList }) => {
                                   image={anime.images.webp.image_url}
                                   score={anime.score ? anime.score : 0}
                                   studio={anime.studios && anime.studios.length > 0 ? anime.studios[0].name : 'Unknown'}
-                                  genre={anime.genres && anime.genres.length > 0 ? anime.genres.map(genre => genre.name + ' ') : 'Unknow'}
+                                  genres={anime.genres && anime.genres.length > 0 ? anime.genres.map(genre => genre.name + ' ') : 'Unknow'}
                 />
             )}
         </>
