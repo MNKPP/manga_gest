@@ -3,14 +3,15 @@ import { BrowserRouter as Router,Route,Routes } from "react-router-dom";
 import { Authentification, PrivateRoutes } from './components/index.js';
 import Dashboard from "./container/Dashboard.jsx";
 import {useState} from "react";
-import Header from "./components/Header/Header.jsx";
-import Footer from "./components/Footer/Footer.jsx";
+
 
 
 export default function App() {
-    const [token, setToken] = useState(null);
+    const existingToken = localStorage.getItem("token");
+    const [token, setToken] = useState(existingToken);
 
     const handleReceiveToken = (receivedToken) => {
+        localStorage.setItem("token", receivedToken);
         setToken(receivedToken);
     }
 
@@ -20,7 +21,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Authentification onReceiveToken={handleReceiveToken} />} />
                     <Route element={<PrivateRoutes token={token} />}>
-                        <Route path="/dashboard" element={<Dashboard token={token}/>} />
+                        <Route path="/dashboard" element={<Dashboard />} />
                     </Route>
                 </Routes>
             </Router>
