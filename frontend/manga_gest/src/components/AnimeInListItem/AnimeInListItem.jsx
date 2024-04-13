@@ -11,6 +11,7 @@ const AnimeInListItem = ({ listId }) => {
         fetchAnimeInList(listId, token)
             .then((data) => {
                 setAnimeInList(data);
+                console.log(data)
             })
             .catch((error) => {
                 throw new Error(error.message);
@@ -27,14 +28,17 @@ const AnimeInListItem = ({ listId }) => {
                             <h2>{anime.title}</h2>
                             <div className={s['buttons']}>
                                 <button>-</button>
+                                { anime.Episodes && anime.Episodes.length > 0 &&
+                                    <p>{ anime.Episodes[0].watchedEpisode } / { anime.Episodes[0].totalEpisodes}</p>
+                                }
                                 <button>+</button>
                             </div>
                         </div>
                     </div>
-                )
+                );
             })}
         </div>
-    )
+    );
 }
 
 export default AnimeInListItem;

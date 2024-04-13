@@ -105,13 +105,26 @@ const animeListService = {
     },
 
     getAllAnimeInList: async (animeListId) => {
-        const animeList = await db.Anime.findAll({ where: { animeListId } });
+        const animeList = await db.Anime.findAll({
+            where: { animeListId },
+            include: [
+                {
+                    model: db.AnimeList,
+                    required: true
+                },
+                {
+                    model: db.Episode,
+                    required: true
+                }
+            ]
+        });
 
         if (!animeList) {
             throw new Error('AnimeList Not Found');
         }
 
-        return animeList.map(anime => new AnimeDto(anime));
+        return animeList;
+        // return animeList.map(anime => new AnimeDto(anime));
     }
 }
 
