@@ -10,8 +10,9 @@ const MenuBurgerAnimeList = ({ clickListAction }) => {
 
     useEffect(() => {
         fetchAnimeLists(existingToken)
-            .then(response => {
-                setAnimeList(response);
+            .then(data => {
+                console.log(data)
+                setAnimeList(data);
             })
             .catch(error => {
                 throw new Error(error.message);

@@ -5,13 +5,36 @@ const episodeController = {
         const memberId = req.token.id;
         const animeId = parseInt(req.params.id);
 
-        await episodeService.increment(memberId, animeId);
+        const episode = await episodeService.increment(memberId, animeId);
 
+        if (!episode) {
+            res.status(404)
+                .json({
+                    errorMessage: 'No episode found',
+                })
+            return;
+        }
 
+        res.status(200)
+            .json(episode);
     },
 
     decrement: async (req, res) => {
+        const memberId = req.token.id;
+        const animeId = parseInt(req.params.id);
 
+        const episode = await episodeService.decrement(memberId, animeId);
+
+        if (!episode) {
+            res.status(404)
+                .json({
+                    errorMessage: 'No episode found',
+                })
+            return;
+        }
+
+        res.status(200)
+            .json(episode);
     }
 }
 
