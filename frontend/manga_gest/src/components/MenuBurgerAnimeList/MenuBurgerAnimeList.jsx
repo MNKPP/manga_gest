@@ -11,7 +11,6 @@ const MenuBurgerAnimeList = ({ clickListAction }) => {
     useEffect(() => {
         fetchAnimeLists(existingToken)
             .then(data => {
-                console.log(data)
                 setAnimeList(data);
             })
             .catch(error => {
@@ -21,6 +20,7 @@ const MenuBurgerAnimeList = ({ clickListAction }) => {
 
     const onListClickAction = (id) => {
         clickListAction(id)
+        console.log(id)
     }
 
     return (

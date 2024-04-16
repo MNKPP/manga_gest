@@ -38,7 +38,7 @@ const episodeService = {
         return new EpisodeDto(episode);
     },
 
-    movedAnimeIfFinished: async (animeId, memberId) => {
+    moveAnimeIfFinished: async (animeId, memberId) => {
         const episode = await db.Episode.findOne({
             where: {
                 animeId
@@ -64,6 +64,52 @@ const episodeService = {
             const animeList = await db.AnimeList.findOne({
                 where: {
                     name: 'Terminé',
+                    memberId
+                }
+            });
+
+            if (!animeList) {
+                throw new Error(`Cannot find animeList`);
+            }
+
+            await db.Anime.update({ animeListId: animeList.id },{
+                where: {
+                    id: animeId
+                },
+            });
+
+            return true;
+        }
+
+        return false;
+    },
+
+    moveAnimeToWatching: async (animeId, memberId) => {
+        const episode = await db.Episode.findOne({
+            where: {
+                animeId
+            }
+        });
+
+        if (!episode) {
+            throw new Error(`Cannot find episode`);
+        }
+
+        if (episode.watchedEpisode < episode.totalEpisodes) {
+
+            const anime = await db.Anime.findOne({
+                where: {
+                    id: animeId
+                }
+            });
+
+            if (!anime) {
+                throw new Error(`Cannot find Anime`);
+            }
+
+            const animeList = await db.AnimeList.findOne({
+                where: {
+                    name: 'En cours',
                     memberId
                 }
             });

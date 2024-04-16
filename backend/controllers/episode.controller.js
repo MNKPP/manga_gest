@@ -5,8 +5,6 @@ const episodeController = {
         const memberId = req.token.id;
         const animeId = parseInt(req.params.id);
 
-        console.log(memberId, animeId)
-
         const episode = await episodeService.increment(memberId, animeId);
 
         if (!episode) {
@@ -17,7 +15,7 @@ const episodeController = {
             return;
         }
 
-        const animeMoved = await episodeService.movedAnimeIfFinished(animeId, memberId);
+        const animeMoved = await episodeService.moveAnimeIfFinished(animeId, memberId);
 
         if (!animeMoved) {
             console.log('Not Moved')
@@ -39,6 +37,12 @@ const episodeController = {
                     errorMessage: 'No episode found',
                 })
             return;
+        }
+
+        const animeMoved = await episodeService.moveAnimeToWatching(animeId, memberId);
+
+        if (!animeMoved) {
+            console.log('Not Moved')
         }
 
         res.status(200)

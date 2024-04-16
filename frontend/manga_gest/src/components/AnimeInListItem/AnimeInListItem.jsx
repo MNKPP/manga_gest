@@ -22,6 +22,11 @@ const AnimeInListItem = ({ listId }) => {
         incrementEpisodes(animeId, token)
             .then(({data}) => {
                 setEpisodeNb(data.watchedEpisode)
+                setAnimeInList(() => {
+                    if (data.watchedEpisode === data.totalEpisodes) {
+                        return animeInList.filter((anime) => anime.id !== animeId);
+                    }
+                })
             })
             .catch(error => {
                 throw new Error(error.message);
@@ -32,11 +37,17 @@ const AnimeInListItem = ({ listId }) => {
         decrementEpisodes(animeId, token)
             .then(({data}) => {
                 setEpisodeNb(data.watchedEpisode)
+                setAnimeInList(() => {
+                    if (data.watchedEpisode <= data.totalEpisodes) {
+                        return animeInList.filter((anime) => anime.id !== animeId);
+                    }
+                })
             })
             .catch(error => {
                 throw new Error(error.message);
             })
     }
+
 
     return (
         <div className={s['anime-list']}>
@@ -55,7 +66,7 @@ const AnimeInListItem = ({ listId }) => {
     );
 }
 
-const AnimeItem = ({id, image, title, episode, handleIncrementClick, handleDecrementClick}) => {
+const AnimeItem = ({titleList, id, image, title, episode, handleIncrementClick, handleDecrementClick}) => {
     const [episodeNb, setEpisodeNb] = useState(episode[0].watchedEpisode);
 
     const onIncrement = () => handleIncrementClick(id, setEpisodeNb);
@@ -63,6 +74,7 @@ const AnimeItem = ({id, image, title, episode, handleIncrementClick, handleDecre
 
     return (
         <div className={s['anime-in-list-item']}>
+            <h1>{titleList}</h1>
             <img src={image} alt={title}/>
             <div className={s['right-side']}>
                 <h2>{title}</h2>
@@ -71,7 +83,7 @@ const AnimeItem = ({id, image, title, episode, handleIncrementClick, handleDecre
                     {episode && episode.length > 0 &&
                         <p>{episodeNb} / {episode[0].totalEpisodes}</p>
                     }
-                    <button onClick={onIncrement}>+</button>
+                    {episodeNb >= episode[0].totalEpisodes ? '' : <button onClick={onIncrement}>+</button>}
                 </div>
             </div>
         </div>
