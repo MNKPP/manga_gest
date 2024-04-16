@@ -21,7 +21,6 @@ const AnimeInListItem = ({ listId }) => {
     const handleIncrementClick = (animeId, setEpisodeNb) => {
         incrementEpisodes(animeId, token)
             .then(({data}) => {
-                console.log(data)
                 setEpisodeNb(data.watchedEpisode)
             })
             .catch(error => {
@@ -32,7 +31,6 @@ const AnimeInListItem = ({ listId }) => {
     const handleDecrementClick = (animeId, setEpisodeNb) => {
         decrementEpisodes(animeId, token)
             .then(({data}) => {
-                console.log(data)
                 setEpisodeNb(data.watchedEpisode)
             })
             .catch(error => {
