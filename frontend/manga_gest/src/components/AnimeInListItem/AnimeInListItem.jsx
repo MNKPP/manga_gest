@@ -3,8 +3,10 @@ import {useEffect, useState} from "react";
 import {fetchAnimeInList} from "../../services/anileList.service.js";
 import {decrementEpisodes, incrementEpisodes} from "../../services/episode.service.js";
 
+
 const AnimeInListItem = ({ listId }) => {
     const [animeInList, setAnimeInList] = useState(null);
+    const [animeIds, setAnimeIds] = useState(new Set());
 
     const token = localStorage.getItem("token");
 
@@ -24,8 +26,14 @@ const AnimeInListItem = ({ listId }) => {
                 setEpisodeNb(data.watchedEpisode)
                 setAnimeInList(() => {
                     if (data.watchedEpisode === data.totalEpisodes) {
+                        setAnimeIds(animeIds => {
+                            const newSet = new Set(animeIds);
+                            newSet.add(animeId);
+                            return newSet;
+                        })
                         return animeInList.filter((anime) => anime.id !== animeId);
                     }
+                    return animeInList
                 })
             })
             .catch(error => {
@@ -38,9 +46,15 @@ const AnimeInListItem = ({ listId }) => {
             .then(({data}) => {
                 setEpisodeNb(data.watchedEpisode)
                 setAnimeInList(() => {
-                    if (data.watchedEpisode <= data.totalEpisodes) {
+                    if (data.watchedEpisode < data.totalEpisodes && animeIds.has(animeId)) {
+                        setAnimeIds(animeIds => {
+                            const newSet = new Set(animeIds);
+                            newSet.delete(animeId);
+                            return newSet;
+                        })
                         return animeInList.filter((anime) => anime.id !== animeId);
                     }
+                    return animeInList;
                 })
             })
             .catch(error => {
