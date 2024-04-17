@@ -31,3 +31,19 @@ export const fetchAnimeLists = async (token) => {
 
     return response;
 }
+
+export const addAnimeInList = async (id, data, token) => {
+
+    let response;
+    try {
+        response = await axios.post(`http://localhost:8080/api/animeList/${id}/anime`, {...data}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+    } catch (error) {
+        console.log(error)
+    }
+
+    return response;
+}

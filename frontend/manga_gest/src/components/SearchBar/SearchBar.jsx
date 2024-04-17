@@ -13,6 +13,7 @@ const SearchBar = ({ onFoundedAnime }) => {
         e.preventDefault();
         fetchAnimeOnJikan(searchData)
             .then(data => {
+                console.log(data)
                 onFoundedAnime(data)
             }).catch(error => {
                 throw new Error(error);

@@ -1,14 +1,39 @@
-import s from './AddToAnimeListButton.module.scss';
+import { useEffect, useState } from 'react';
+import { fetchAnimeLists } from '../../services/anileList.service.js';
 
-const addToAnimeListButton = () => {
+const AddToAnimeListButton = ({ onReceiveListId, addAnimeClick }) => {
+    const existingToken = localStorage.getItem("token");
+    const [animeLists, setAnimeLists] = useState([]);
+    const [listId, setListId] = useState(null);
 
-    // TODO : Travailler sur l'ajout à la liste par défaut, prochaine étape
+    useEffect(() => {
+        fetchAnimeLists(existingToken)
+            .then(response => {
+                setAnimeLists(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
+
+    const addToAnimeAction = () => {
+        addAnimeClick(listId);
+    }
+
+    const receiveLisId = (e) => {
+        setListId(e.target.value);
+    }
 
     return (
         <>
-            <button className={s['add-to-anime-list-button']}>Ajouter</button>
+            <button onClick={addToAnimeAction}>Ajouter</button>
+            <select name="input-select" id="anime-list" onChange={receiveLisId}>
+                {animeLists.map((list) => (
+                    <option key={list.id} value={list.id}>{list.name}</option>
+                ))}
+            </select>
         </>
-    )
-}
+    );
+};
 
-export default addToAnimeListButton;
+export default AddToAnimeListButton;
