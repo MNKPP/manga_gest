@@ -15,5 +15,4 @@ export const animeValidator = yup.object().shape({
 
     trailer: yup.string(),
 
-
 })

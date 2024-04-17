@@ -128,6 +128,16 @@ const episodeService = {
         }
 
         return false;
+    },
+
+    addEpisodeOnAddingAnime: async (memberId, animeId, totalEpisodes) => {
+        const episode = await db.Episode.create({memberId, animeId, watchedEpisode: 0, totalEpisodes });
+
+        if (!episode) {
+            throw new Error(`Cannot find episode`);
+        }
+
+        return new EpisodeDto(episode);
     }
 }
 

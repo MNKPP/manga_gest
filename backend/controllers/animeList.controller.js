@@ -117,8 +117,11 @@ const animeListController = {
     },
 
     addAnimeInList: async (req, res) => {
+        const memberId = req.token.id;
         const data = req.body;
         const animeListId = parseInt(req.params.id);
+
+        console.log(memberId, data, animeListId)
 
         let validationData;
         try {
@@ -131,7 +134,8 @@ const animeListController = {
             return;
         }
 
-        const anime = await animeListService.addAnimeInList(validationData, animeListId);
+
+        const anime = await animeListService.addAnimeInList(memberId, validationData, animeListId);
 
         if (!anime) {
             res.status(403)
