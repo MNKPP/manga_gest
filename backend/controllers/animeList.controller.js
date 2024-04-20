@@ -134,7 +134,6 @@ const animeListController = {
             return;
         }
 
-
         const anime = await animeListService.addAnimeInList(memberId, validationData, animeListId);
 
         if (!anime) {

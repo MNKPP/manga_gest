@@ -2,7 +2,6 @@ import db from "../models/index.js";
 
 const animeService = {
     getById: async (id) => {
-        console.log(id)
         const anime = await db.Anime.findOne({ where: { id: id } });
 
         if (!anime) {

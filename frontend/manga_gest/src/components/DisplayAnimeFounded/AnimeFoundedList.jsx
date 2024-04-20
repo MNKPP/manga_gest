@@ -5,8 +5,6 @@ import {addAnimeInList} from "../../services/anileList.service.js";
 
 export const AnimeFoundedList = ({ animeList }) => {
 
-    console.log(animeList)
-
     return (
         <div>
             {animeList.map((anime, index) =>
@@ -37,8 +35,6 @@ export const AnimeFoundedItem = ({id, title, image, score, studio, genres, total
         synopsis : 'sdqflmjdsmfjsqmlfdjqsmdfkqsjml',
         episodes: totalEpisodes
     }
-
-
 
     const handleAddAnimeClick = (listId) => {
 

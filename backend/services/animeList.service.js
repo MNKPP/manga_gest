@@ -77,7 +77,6 @@ const animeListService = {
         return animeLists.map(animeList => new AnimeListDto(animeList));
     },
 
-
     addAnimeInList: async (memberId, animeData, animeListId) => {
 
         const data = {
@@ -94,12 +93,15 @@ const animeListService = {
             where: {...data, animeListId}
         });
 
-        console.log('animeCreated', animeCreated)
         if (!created) {
             throw new Error('Anime already in list');
         }
 
         const addedEpisode = episodeService.addEpisodeOnAddingAnime(memberId, animeCreated.id, animeData.episodes)
+
+        if (!addedEpisode) {
+            throw new Error('Cannot add episode on adding anime');
+        }
 
         return new AnimeDto(animeCreated);
     },

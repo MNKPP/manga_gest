@@ -15,10 +15,10 @@ const episodeController = {
             return;
         }
 
-        const animeMoved = await episodeService.moveAnimeIfFinished(animeId, memberId);
-
-        if (!animeMoved) {
-            console.log('Not Moved')
+        if (episode.watchedEpisode === episode.totalEpisodes) {
+            await episodeService.moveAnime(animeId, memberId, 'Terminé');
+        } else if (episode.watchedEpisode === 1) {
+            await episodeService.moveAnime(animeId, memberId, 'En cours');
         }
 
         res.status(200)
@@ -39,35 +39,14 @@ const episodeController = {
             return;
         }
 
-        const animeMoved = await episodeService.moveAnimeToWatching(animeId, memberId);
-
-        if (!animeMoved) {
-            console.log('Not Moved')
+        if (episode.watchedEpisode === 0) {
+            await episodeService.moveAnime(animeId, memberId, 'A voir');
+        } else if (episode.watchedEpisode < episode.totalEpisodes) {
+            await episodeService.moveAnime(animeId, memberId, 'En cours');
         }
 
         res.status(200)
             .json(episode);
-    },
-
-    addEpisodeOnAddingAnime: async (req, res) => {
-        const memberId = req.token.id;
-        const animeId = parseInt(req.params.id);
-        const totalEpisodes = parseInt(req.body.episodes);
-
-        const episode = await episodeService.addEpisodeOnAddingAnime(memberId, animeId, totalEpisodes);
-
-        if (!episode) {
-            res.status(404)
-                .json({
-                    errorMessage: 'No episode found',
-                })
-            return;
-        }
-
-        res.status(200)
-            .json({
-                message: 'Episode added successfully',
-            });
     }
 }
 

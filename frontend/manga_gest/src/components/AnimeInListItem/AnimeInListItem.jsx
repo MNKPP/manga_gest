@@ -25,7 +25,7 @@ const AnimeInListItem = ({ listId }) => {
             .then(({data}) => {
                 setEpisodeNb(data.watchedEpisode)
                 setAnimeInList(() => {
-                    if (data.watchedEpisode === data.totalEpisodes) {
+                    if (data.watchedEpisode === data.totalEpisodes || data.watchedEpisode === 1) {
                         setAnimeIds(animeIds => {
                             const newSet = new Set(animeIds);
                             newSet.add(animeId);
@@ -46,7 +46,7 @@ const AnimeInListItem = ({ listId }) => {
             .then(({data}) => {
                 setEpisodeNb(data.watchedEpisode)
                 setAnimeInList(() => {
-                    if (data.watchedEpisode < data.totalEpisodes && animeIds.has(animeId)) {
+                    if (data.watchedEpisode < data.totalEpisodes && animeIds.has(animeId) || data.watchedEpisode === 0 && animeIds.has(animeId)) {
                         setAnimeIds(animeIds => {
                             const newSet = new Set(animeIds);
                             newSet.delete(animeId);
@@ -93,7 +93,7 @@ const AnimeItem = ({titleList, id, image, title, episode, handleIncrementClick, 
             <div className={s['right-side']}>
                 <h2>{title}</h2>
                 <div className={s['buttons']}>
-                    <button onClick={onDecrement}>-</button>
+                    {episodeNb === 0 ? '' : <button onClick={onDecrement}>-</button>}
                     {episode && episode.length > 0 &&
                         <p>{episodeNb} / {episode[0].totalEpisodes}</p>
                     }
