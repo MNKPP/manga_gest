@@ -97,7 +97,13 @@ const animeListService = {
             throw new Error('Anime already in list');
         }
 
-        const addedEpisode = episodeService.addEpisodeOnAddingAnime(memberId, animeCreated.id, animeData.episodes)
+        const listName = await db.AnimeList.findOne({ where: { id: animeListId } });
+
+        if (!listName) {
+            throw new Error('AnimeList Not Found');
+        }
+
+        const addedEpisode = episodeService.addEpisodeOnAddingAnime(memberId, animeCreated.id, animeData.episodes, listName.name)
 
         if (!addedEpisode) {
             throw new Error('Cannot add episode on adding anime');

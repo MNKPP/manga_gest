@@ -66,6 +66,7 @@ const episodeService = {
         }
 
         const anime = await db.Anime.findOne({ where: { id: animeId } });
+
         if (!anime) {
             throw new Error('Cannot find Anime');
         }
@@ -80,7 +81,6 @@ const episodeService = {
             throw new Error('Cannot find animeList');
         }
 
-        // Updating the animeListId for the specified anime
         await db.Anime.update({ animeListId: animeList.id }, {
             where: {
                 id: animeId
@@ -90,13 +90,22 @@ const episodeService = {
         return true;
     },
 
-    // TODO : Pour adding Anime on va pouvoir faire le même systéme que moveAnime
-    // Si dans Terminé les watchedEpisode sont égales aux totalEpisodes
-    // Si dans En cours alors on commence à mettre les épisodes à 1
-    // Si dans Si dans à voir alors on commence les épisodes à 0
+    addEpisodeOnAddingAnime: async (memberId, animeId, totalEpisodes, listName) => {
 
-    addEpisodeOnAddingAnime: async (memberId, animeId, totalEpisodes) => {
-            const episode = await db.Episode.create({memberId, animeId, watchedEpisode: 0, totalEpisodes });
+            let episode;
+            switch (listName) {
+                case 'A voir':
+                    episode = await db.Episode.create({memberId, animeId, watchedEpisode: 0, totalEpisodes });
+                    break;
+                case 'En cours':
+                    episode = await db.Episode.create({memberId, animeId, watchedEpisode: 1, totalEpisodes });
+                    break;
+                case 'Terminé':
+                    episode = await db.Episode.create({memberId, animeId, watchedEpisode: totalEpisodes, totalEpisodes });
+                    break;
+                default :
+                    throw new Error('Invalid list name');
+            }
 
             if (!episode) {
                 throw new Error(`Cannot find episode`);
@@ -104,10 +113,6 @@ const episodeService = {
 
             return new EpisodeDto(episode);
         },
-
-        addEpisodeOnAddingAnime: async (memberId, animeId, totalEpisodes) => {
-
-        }
     }
 
 export default episodeService;
