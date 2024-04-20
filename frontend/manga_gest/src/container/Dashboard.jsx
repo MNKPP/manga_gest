@@ -1,9 +1,8 @@
 import PrivateLayout from "../components/PrivateLayout/PrivateLayout.jsx";
 import SearchBar from "../components/SearchBar/SearchBar.jsx";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {AnimeFoundedList} from "../components/DisplayAnimeFounded/AnimeFoundedList.jsx";
 import AnimeInListItem from "../components/AnimeInListItem/AnimeInListItem.jsx";
-import {fetchAnimeLists} from "../services/anileList.service.js";
 
 const Dashboard = () => {
     const [animeListFounded, setAnimeListFounded] = useState([]);
@@ -23,9 +22,9 @@ const Dashboard = () => {
 
     return (
         <PrivateLayout clickListAction={onListClickAction}>
-            <SearchBar onFoundedAnime={dataFounded}/>
-            {isFounded && <AnimeFoundedList animeList={animeListFounded}/>}
-            <AnimeInListItem listId={listId}/>
+            <SearchBar onFoundedAnime={dataFounded} setIsFounded={setIsFounded} />
+            {isFounded && <AnimeFoundedList animeList={animeListFounded} isFounded={isFounded} setIsFounded={setIsFounded} />}
+            {!isFounded && <AnimeInListItem listId={listId}/>}
         </PrivateLayout>
     )
 }

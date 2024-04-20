@@ -91,9 +91,12 @@ const AnimeItem = ({titleList, id, image, title, episode, handleIncrementClick, 
             <h1>{titleList}</h1>
             <img src={image} alt={title}/>
             <div className={s['right-side']}>
-                <h2>{title}</h2>
+                <div className={s['title']}>
+                    <h2>{title}</h2>
+                    <p>⭐</p>
+                </div>
                 <div className={s['buttons']}>
-                    {episodeNb === 0 ? '' : <button onClick={onDecrement}>-</button>}
+                {episodeNb === 0 ? '' : <button onClick={onDecrement}>-</button>}
                     {episode && episode.length > 0 &&
                         <p>{episodeNb} / {episode[0].totalEpisodes}</p>
                     }

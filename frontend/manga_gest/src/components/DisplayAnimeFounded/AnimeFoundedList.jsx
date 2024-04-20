@@ -1,29 +1,37 @@
-import React, { useState } from 'react'; // Fusionné l'import de useState
 import s from './AnimeFoundedList.module.scss';
 import AddToAnimeListButton from "../AddToAnimeListButton/AddToAnimeListButton.jsx";
 import {addAnimeInList} from "../../services/anileList.service.js";
 
-export const AnimeFoundedList = ({ animeList }) => {
+export const AnimeFoundedList = ({ animeList, setIsFounded, isFounded}) => {
+
+    const handleDisplayed = () => {
+        setIsFounded(!isFounded);
+    };
 
     return (
-        <div>
-            {animeList.map((anime, index) =>
-                    <AnimeFoundedItem key={index}
-                                      id={anime.mal_id}
-                                      title={anime.title}
-                                      image={anime.images.webp.image_url}
-                                      score={anime.score ? anime.score : 0}
-                                      studio={anime.studios && anime.studios.length > 0 ? anime.studios[0].name : 'Unknown'}
-                                      genres={anime.genres && anime.genres.length > 0 ? anime.genres.map(genre => genre.name + ' ') : ['Unknow']}
-                                      totalEpisodes={anime.episodes}
-                    />
-                )
+        <>
+            {isFounded &&
+                <div className={s['anime-founded-list']}>
+                    <button onClick={handleDisplayed}>X</button>
+                    {animeList.map((anime, index) =>
+                        <AnimeFoundedItem key={index}
+                                          id={anime.mal_id}
+                                          title={anime.title}
+                                          image={anime.images.webp.image_url}
+                                          score={anime.score ? anime.score : 0}
+                                          studio={anime.studios && anime.studios.length > 0 ? anime.studios[0].name : 'Unknown'}
+                                          genres={anime.genres && anime.genres.length > 0 ? anime.genres.map(genre => genre.name + ' ') : ['Unknow']}
+                                          totalEpisodes={anime.episodes}
+                        />
+                    )
+                    }
+                </div>
             }
-        </div>
+        </>
     )
 }
 
-export const AnimeFoundedItem = ({id, title, image, score, studio, genres, totalEpisodes}) => {
+export const AnimeFoundedItem = ({title, image, score, studio, genres, totalEpisodes}) => {
     const existingToken = localStorage.getItem('token');
 
     const data = {
@@ -32,7 +40,7 @@ export const AnimeFoundedItem = ({id, title, image, score, studio, genres, total
         score: Math.round(score),
         studio,
         genre: genres?.join(', '),
-        synopsis : 'sdqflmjdsmfjsqmlfdjqsmdfkqsjml',
+        synopsis: 'sdqflmjdsmfjsqmlfdjqsmdfkqsjml',
         episodes: totalEpisodes
     }
 
@@ -40,13 +48,12 @@ export const AnimeFoundedItem = ({id, title, image, score, studio, genres, total
 
         addAnimeInList(listId, data, existingToken)
             .then(response => {
-                console.log('Successfully added anime item')
+                console.log('added anime list', response);
             })
             .catch(error => {
                 throw new Error('Error adding anime item', error.message);
             })
     }
-
 
     return (
         <div className={s['anime-founded-item']}>

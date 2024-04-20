@@ -2,7 +2,7 @@ import s from './SearchBar.module.scss';
 import { useEffect, useState } from "react";
 import { fetchAnimeOnJikan } from "../../services/anime.service.js";
 
-const SearchBar = ({ onFoundedAnime }) => {
+const SearchBar = ({ onFoundedAnime, setIsFounded }) => {
     const [searchData, setSearchData] = useState({});
 
     const handleInputChange = (e) => {
@@ -13,8 +13,9 @@ const SearchBar = ({ onFoundedAnime }) => {
         e.preventDefault();
         fetchAnimeOnJikan(searchData)
             .then(data => {
-                console.log(data)
-                onFoundedAnime(data)
+                console.log(data);
+                onFoundedAnime(data);
+                setIsFounded(true);
             }).catch(error => {
                 throw new Error(error);
         })

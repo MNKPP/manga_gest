@@ -1,25 +1,31 @@
 .anime-list {
+	@apply w-full px-2;
 
 	.anime-in-list-item {
-		@apply flex mt-5 ;
+		@apply flex w-full mt-5 ;
 
 		img {
 			@apply w-20
 		}
 
 		.right-side {
-			@apply flex flex-col justify-around;
+			@apply flex flex-col justify-around w-full;
 
-			h2 {
-				@apply ml-5 mb-10;
+			.title {
+				@apply flex justify-between;
+
+				h2 {
+					@apply text-lg ml-5 mb-10;
+				}
 			}
 		}
 
 		.buttons {
-			@apply flex;
+			@apply flex justify-center w-full;
 
 			button {
-				@apply mx-14
+				@apply mx-14 p-1.5 border-0 bg-blue-500 text-white;
+				border-radius: 100%;
 			}
 		}
 	}
