@@ -1,8 +1,6 @@
 import animeListService from "../services/animeList.service.js";
 import { animeListValidator } from "../validators/animeList.validator.js";
-import req from "express/lib/request.js";
 import {animeValidator} from "../validators/anime.validator.js";
-import res from "express/lib/response.js";
 
 const animeListController = {
 
@@ -181,7 +179,7 @@ const animeListController = {
 
         res.status(200)
             .json(animeList);
-    }
+    },
 }
 
 export default animeListController;

@@ -9,7 +9,5 @@ export const fetchAnimeOnJikan = async (searchBarText) => {
         }
     });
 
-    console.log(response)
-
     return response;
 }

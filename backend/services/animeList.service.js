@@ -113,6 +113,7 @@ const animeListService = {
     },
 
     deleteAnimeInList: async (animeId, animeListId) => {
+
         const animeInList = await db.Anime.findOne({
             where: {id: animeId, animeListId}
         })
@@ -148,8 +149,8 @@ const animeListService = {
         }
 
         return animeList;
-        // return animeList.map(anime => new AnimeDto(anime));
-    }
+    },
+
 }
 
 export default animeListService;

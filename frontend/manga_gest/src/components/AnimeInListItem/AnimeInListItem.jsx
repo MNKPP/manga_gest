@@ -1,6 +1,6 @@
 import s from './AnimeInListItem.module.scss';
 import {useEffect, useState} from "react";
-import {fetchAnimeInList} from "../../services/anileList.service.js";
+import {deleteAnimeInList, fetchAnimeInList} from "../../services/anileList.service.js";
 import {decrementEpisodes, incrementEpisodes} from "../../services/episode.service.js";
 
 
@@ -62,6 +62,18 @@ const AnimeInListItem = ({ listId }) => {
             })
     }
 
+    const handleDeleteClick = (animeId) => {
+        deleteAnimeInList(listId, animeId, token)
+            .then((response) => {
+                setAnimeInList(currentAnimeInList => {
+                    return currentAnimeInList.filter(anime => anime.id !== animeId);
+                });
+            })
+            .catch((error) => {
+                throw new Error(error.message);
+            })
+    }
+
 
     return (
         <div className={s['anime-list']}>
@@ -74,17 +86,19 @@ const AnimeInListItem = ({ listId }) => {
                     episode={anime.Episodes}
                     handleDecrementClick={handleDecrementClick}
                     handleIncrementClick={handleIncrementClick}
+                    handleDeleteClick={handleDeleteClick}
                 />
             ))}
         </div>
     );
 }
 
-const AnimeItem = ({titleList, id, image, title, episode, handleIncrementClick, handleDecrementClick}) => {
+const AnimeItem = ({titleList, id, image, title, episode, handleIncrementClick, handleDecrementClick, handleDeleteClick}) => {
     const [episodeNb, setEpisodeNb] = useState(episode[0].watchedEpisode);
 
     const onIncrement = () => handleIncrementClick(id, setEpisodeNb);
     const onDecrement = () => handleDecrementClick(id, setEpisodeNb);
+    const onDeleteClick = () => handleDeleteClick(id);
 
     return (
         <div className={s['anime-in-list-item']}>
@@ -94,6 +108,7 @@ const AnimeItem = ({titleList, id, image, title, episode, handleIncrementClick, 
                 <div className={s['title']}>
                     <h2>{title}</h2>
                     <p>⭐</p>
+                    <button onClick={onDeleteClick}>X</button>
                 </div>
                 <div className={s['buttons']}>
                 {episodeNb === 0 ? '' : <button onClick={onDecrement}>-</button>}

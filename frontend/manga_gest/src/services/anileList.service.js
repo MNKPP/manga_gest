@@ -47,3 +47,19 @@ export const addAnimeInList = async (id, data, token) => {
 
     return response;
 }
+
+export const deleteAnimeInList = async (id, animeId, token) => {
+
+    let response;
+    try {
+        response = await axios.delete(`http://localhost:8080/api/animeList/${id}/anime/${animeId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    return response;
+}
