@@ -2,6 +2,7 @@ import s from './AnimeInListItem.module.scss';
 import {useEffect, useState} from "react";
 import {deleteAnimeInList, fetchAnimeInList} from "../../services/anileList.service.js";
 import {decrementEpisodes, incrementEpisodes} from "../../services/episode.service.js";
+import {CircleMinus, CirclePlus, CircleX, Star} from "lucide-react";
 
 
 const AnimeInListItem = ({ listId }) => {
@@ -107,15 +108,17 @@ const AnimeItem = ({titleList, id, image, title, episode, handleIncrementClick, 
             <div className={s['right-side']}>
                 <div className={s['title']}>
                     <h2>{title}</h2>
-                    <p>⭐</p>
-                    <button onClick={onDeleteClick}>X</button>
+                    <div className={s['logo-buttons']}>
+                        <Star className={s['star']}/>
+                        <CircleX className={s['circleX']} onClick={onDeleteClick}/>
+                    </div>
                 </div>
                 <div className={s['buttons']}>
-                {episodeNb === 0 ? '' : <button onClick={onDecrement}>-</button>}
+                    {episodeNb === 0 ? '' : <CircleMinus className={s['circleMinus']} onClick={onDecrement}/>}
                     {episode && episode.length > 0 &&
                         <p>{episodeNb} / {episode[0].totalEpisodes}</p>
                     }
-                    {episodeNb >= episode[0].totalEpisodes ? '' : <button onClick={onIncrement}>+</button>}
+                    {episodeNb >= episode[0].totalEpisodes ? '' : <CirclePlus className={s['circlePlus']} onClick={onIncrement}/>}
                 </div>
             </div>
         </div>

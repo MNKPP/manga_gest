@@ -1,12 +1,12 @@
 import s from './MenuBurgerAnimeList.module.scss';
 import {useEffect, useState} from "react";
 import {fetchAnimeLists} from "../../services/anileList.service.js";
+import {CirclePlus} from "lucide-react";
 
-const MenuBurgerAnimeList = ({ clickListAction }) => {
+const MenuBurgerAnimeList = ({ clickListAction, openMenu, menuOpen }) => {
     const existingToken = localStorage.getItem("token");
 
     const [animeList, setAnimeList] = useState([]);
-
 
     useEffect(() => {
         fetchAnimeLists(existingToken)
@@ -20,17 +20,25 @@ const MenuBurgerAnimeList = ({ clickListAction }) => {
 
     const onListClickAction = (id) => {
         clickListAction(id)
-        console.log(id)
+        openMenu(!menuOpen)
     }
 
     return (
-        <div className={s['menu-burger-anime-list']}>
-            { animeList.data && animeList.data.length > 0 && animeList.data.map((animeList) => {
-                return <div className={s['anime-list']} id={animeList.id} onClick={() => onListClickAction(animeList.id)} key={animeList.id}>
-                    { animeList.name }
+        <>
+            <div className={s['menu-burger-anime-list']}>
+                <div>
+                    {animeList.data && animeList.data.length > 0 && animeList.data.map((animeList) => {
+                        return <div className={s['anime-list']} id={animeList.id}
+                                    onClick={() => onListClickAction(animeList.id)} key={animeList.id}>
+                            {animeList.name}
+                        </div>
+                    })}
                 </div>
-            }) }
-        </div>
+                <div className={s['button']}>
+                    <CirclePlus className={s['circlePlus']} size={30}/>
+                </div>
+            </div>
+        </>
     )
 }
 

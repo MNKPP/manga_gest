@@ -15,7 +15,7 @@ const Header = ({ clickListAction }) => {
             <div className={s['menu-logo']} onClick={openMenu}>
                 <Menu color={"#fff"}/>
             </div>
-            { menuOpen && <MenuBurgerAnimeList clickListAction={clickListAction}/>}
+            { menuOpen && <MenuBurgerAnimeList clickListAction={clickListAction} openMenu={openMenu} menuOpen={menuOpen} />}
         </header>
     )
 }

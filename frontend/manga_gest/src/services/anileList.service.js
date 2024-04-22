@@ -25,6 +25,7 @@ export const fetchAnimeLists = async (token) => {
                 'Authorization': `Bearer ${token}`
             }
         });
+        console.log(response.data)
     } catch (error) {
         console.log(error);
     }
@@ -41,6 +42,7 @@ export const addAnimeInList = async (id, data, token) => {
                 'Authorization': `Bearer ${token}`
             }
         });
+        console.log(response.data);
     } catch (error) {
         console.log(error)
     }

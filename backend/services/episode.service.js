@@ -41,6 +41,7 @@ const episodeService = {
     moveAnime: async (animeId, memberId, listName) => {
 
         const episode = await db.Episode.findOne({ where: { animeId } });
+
         if (!episode) {
             throw new Error('Cannot find episode');
         }
@@ -101,6 +102,9 @@ const episodeService = {
                     episode = await db.Episode.create({memberId, animeId, watchedEpisode: 1, totalEpisodes });
                     break;
                 case 'Terminé':
+                    episode = await db.Episode.create({memberId, animeId, watchedEpisode: totalEpisodes, totalEpisodes });
+                    break;
+                case 'Favoris':
                     episode = await db.Episode.create({memberId, animeId, watchedEpisode: totalEpisodes, totalEpisodes });
                     break;
                 default :

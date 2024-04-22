@@ -1,3 +1,7 @@
+.anime-in-list-item {
+	@apply bg-gray-100 rounded-2xl p-3 shadow-md
+}
+
 .anime-list {
 	@apply w-full px-2;
 
@@ -15,17 +19,39 @@
 				@apply flex justify-between;
 
 				h2 {
-					@apply text-lg ml-5 mb-10;
+					@apply text-sm ml-5 mb-10;
+				}
+			}
+
+			.logo-buttons {
+
+				.star {
+					@apply mx-3 text-gray-300 cursor-pointer;
+
+					&:hover {
+						@apply text-yellow-400;
+					}
+				}
+
+				.starOnClick {
+
+				}
+
+				.circleX {
+					@apply text-red-600 cursor-pointer;
 				}
 			}
 		}
 
 		.buttons {
-			@apply flex justify-center w-full;
+			@apply flex justify-evenly w-full;
 
-			button {
-				@apply mx-14 p-1.5 border-0 bg-blue-500 text-white;
-				border-radius: 100%;
+			.circleMinus {
+				@apply text-red-600 cursor-pointer;
+			}
+
+			.circlePlus {
+				@apply text-green-600 cursor-pointer;
 			}
 		}
 	}
