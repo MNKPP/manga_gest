@@ -62,6 +62,8 @@ const episodeService = {
                     return false;
                 }
                 break;
+            case undefined:
+                return false;
             default:
                 throw new Error('Invalid list name');
         }
@@ -108,7 +110,7 @@ const episodeService = {
                     episode = await db.Episode.create({memberId, animeId, watchedEpisode: totalEpisodes, totalEpisodes });
                     break;
                 default :
-                    throw new Error('Invalid list name');
+                    episode = await db.Episode.create({memberId, animeId, watchedEpisode: 0, totalEpisodes });
             }
 
             if (!episode) {

@@ -35,7 +35,7 @@ const MenuBurgerAnimeList = ({ clickListAction, openMenu, menuOpen }) => {
                     })}
                 </div>
                 <div className={s['button']}>
-                    <CirclePlus className={s['circlePlus']} size={30}/>
+                    <CirclePlus className={s['circlePlus']} size={30} />
                 </div>
             </div>
         </>

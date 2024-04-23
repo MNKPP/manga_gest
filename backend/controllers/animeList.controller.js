@@ -1,6 +1,7 @@
 import animeListService from "../services/animeList.service.js";
 import { animeListValidator } from "../validators/animeList.validator.js";
 import {animeValidator} from "../validators/anime.validator.js";
+import res from "express/lib/response.js";
 
 const animeListController = {
 
@@ -119,8 +120,6 @@ const animeListController = {
         const data = req.body;
         const animeListId = parseInt(req.params.id);
 
-        console.log(memberId, data, animeListId)
-
         let validationData;
         try {
             validationData = await animeValidator.validate(data);
@@ -129,6 +128,16 @@ const animeListController = {
                 .json({
                     errorMessage: 'Invalid data'
                 })
+            return;
+        }
+
+        const checkedAnimeInList = await animeListService.checkIfAnimeInList(data.title, animeListId);
+
+        if (!checkedAnimeInList) {
+            res.status(409)
+                .json({
+                    errorMessage: 'Anime already exists in list'
+                });
             return;
         }
 

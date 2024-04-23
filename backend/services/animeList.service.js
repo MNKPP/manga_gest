@@ -151,6 +151,27 @@ const animeListService = {
         return animeList;
     },
 
+    checkIfAnimeInList: async (title, animeListId) => {
+        const animeInList = await db.Anime.findOne({
+            where: {
+                title: title,
+                animeListId: animeListId
+            },
+            include : [
+                {
+                    model: db.AnimeList,
+                    required: true,
+                }
+            ]
+        });
+
+
+        if (!animeInList) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 export default animeListService;

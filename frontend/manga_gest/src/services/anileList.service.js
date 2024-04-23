@@ -10,7 +10,7 @@ export const fetchAnimeInList = async (id, token) => {
             }
         });
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message);
     }
 
     return response;
@@ -25,9 +25,8 @@ export const fetchAnimeLists = async (token) => {
                 'Authorization': `Bearer ${token}`
             }
         });
-        console.log(response.data)
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message);
     }
 
     return response;
@@ -42,9 +41,8 @@ export const addAnimeInList = async (id, data, token) => {
                 'Authorization': `Bearer ${token}`
             }
         });
-        console.log(response.data);
     } catch (error) {
-        console.log(error)
+        throw new Error(error.message);
     }
 
     return response;
