@@ -1,8 +1,8 @@
 import s from './AnimeInListItem.module.scss';
-import {useEffect, useState} from "react";
-import {deleteAnimeInList, fetchAnimeInList} from "../../services/anileList.service.js";
-import {decrementEpisodes, incrementEpisodes} from "../../services/episode.service.js";
-import {CircleMinus, CirclePlus, CircleX, Star} from "lucide-react";
+import { useEffect, useState } from "react";
+import { deleteAnimeInList, fetchAnimeInList } from "../../services/anileList.service.js";
+import { decrementEpisodes, incrementEpisodes } from "../../services/episode.service.js";
+import { CircleMinus, CirclePlus, CircleX, Star} from "lucide-react";
 
 
 const AnimeInListItem = ({ listId }) => {

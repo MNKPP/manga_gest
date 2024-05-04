@@ -2,6 +2,7 @@ import s from './MenuBurgerAnimeList.module.scss';
 import {useEffect, useState} from "react";
 import {fetchAnimeLists} from "../../services/anileList.service.js";
 import {CirclePlus} from "lucide-react";
+import InputListName from "../InputListName/InputListName.jsx";
 
 const MenuBurgerAnimeList = ({ clickListAction, openMenu, menuOpen }) => {
     const existingToken = localStorage.getItem("token");
@@ -18,9 +19,9 @@ const MenuBurgerAnimeList = ({ clickListAction, openMenu, menuOpen }) => {
             })
     }, [])
 
-    const onListClickAction = (id) => {
-        clickListAction(id)
-        openMenu(!menuOpen)
+    const onListClickAction = (id, listName) => {
+        clickListAction(id, listName);
+        openMenu(!menuOpen);
     }
 
     return (
@@ -29,7 +30,7 @@ const MenuBurgerAnimeList = ({ clickListAction, openMenu, menuOpen }) => {
                 <div>
                     {animeList.data && animeList.data.length > 0 && animeList.data.map((animeList) => {
                         return <div className={s['anime-list']} id={animeList.id}
-                                    onClick={() => onListClickAction(animeList.id)} key={animeList.id}>
+                                    onClick={() => onListClickAction(animeList.id, animeList.name)} key={animeList.id}>
                             {animeList.name}
                         </div>
                     })}
@@ -37,6 +38,9 @@ const MenuBurgerAnimeList = ({ clickListAction, openMenu, menuOpen }) => {
                 <div className={s['button']}>
                     <CirclePlus className={s['circlePlus']} size={30} />
                 </div>
+                {/*<div className={s['input-list-name']}>*/}
+                {/*    <InputListName />*/}
+                {/*</div>*/}
             </div>
         </>
     )

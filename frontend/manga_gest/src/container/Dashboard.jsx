@@ -1,3 +1,4 @@
+import s from './Dashboard.module.scss';
 import PrivateLayout from "../components/PrivateLayout/PrivateLayout.jsx";
 import SearchBar from "../components/SearchBar/SearchBar.jsx";
 import {useState} from "react";
@@ -8,6 +9,7 @@ const Dashboard = () => {
     const [animeListFounded, setAnimeListFounded] = useState([]);
     const [isFounded, setIsFounded] = useState(false);
     const [listId, setListId] = useState(null);
+    const [listName, setListName] = useState(null);
 
     const dataFounded = (data) => {
         if (data) {
@@ -16,15 +18,19 @@ const Dashboard = () => {
         }
     }
 
-    const onListClickAction = (id) => {
+    const onListClickAction = (id,listName) => {
         setListId(id);
+        setListName(listName)
     }
 
     return (
         <PrivateLayout clickListAction={onListClickAction}>
             <SearchBar onFoundedAnime={dataFounded} setIsFounded={setIsFounded} />
-            {isFounded && <AnimeFoundedList animeList={animeListFounded} isFounded={isFounded} setIsFounded={setIsFounded} />}
-            {!isFounded && <AnimeInListItem listId={listId}/>}
+            {isFounded && <AnimeFoundedList animeList={animeListFounded} isFounded={isFounded} setIsFounded={setIsFounded}/>}
+            <div>
+                <h2 className={s['list-name']}>{listName}</h2>
+                {!isFounded && <AnimeInListItem listId={listId}/>}
+            </div>
         </PrivateLayout>
     )
 }

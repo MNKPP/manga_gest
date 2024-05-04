@@ -171,7 +171,8 @@ const animeListService = {
         } else {
             return false;
         }
-    }
+    },
+
 }
 
 export default animeListService;

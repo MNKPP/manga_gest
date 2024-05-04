@@ -54,6 +54,7 @@ db.Member.belongsToMany(db.Episode, {
         allowNull: false
     }
 });
+
 db.Episode.belongsToMany(db.Member, {
     through: db.MemberEpisode,
     foreignKey: {

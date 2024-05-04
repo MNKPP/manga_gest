@@ -47,9 +47,7 @@ export const AnimeFoundedItem = ({title, image, score, studio, genres, totalEpis
     const handleAddAnimeClick = (listId) => {
 
         addAnimeInList(listId, data, existingToken)
-            .then(response => {
-                console.log('added anime list', response);
-            })
+            .then(response => {})
             .catch(error => {
                 throw new Error('Error adding anime item', error.message);
             })
