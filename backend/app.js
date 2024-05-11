@@ -1,13 +1,13 @@
 import 'dotenv/config';
 import 'express-async-errors';
 
-import express from 'express';
+import express, {response} from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import mainRouter from "./routes/index.js";
 import db from './models/index.js';
 import { authTokenMiddleware } from "./middlewares/auth.middleware.js";
-import recommendationService from "./services/recommandation.service.js";
+import recommandationService from "./services/recommandation.service.js";
 
 const { NODE_ENV, PORT } = process.env;
 
@@ -35,6 +35,14 @@ app.use(cors());
 app.use(authTokenMiddleware());
 
 app.use('/api', mainRouter);
+
+recommandationService.getRecommendations(1)
+    .then(response => {
+        console.log(response)
+    })
+    .catch(err => {
+        console.log(err)
+    })
 
 app.listen(PORT, () => {
     console.log(`App Running on PORT ${PORT} ${NODE_ENV}`);

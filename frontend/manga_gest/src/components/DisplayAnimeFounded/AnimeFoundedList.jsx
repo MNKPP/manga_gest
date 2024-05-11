@@ -45,9 +45,6 @@ export const AnimeFoundedItem = ({title, image, score, studio, genres, synopsis,
         episodes: totalEpisodes
     }
 
-    console.log(synopsis)
-    console.log(genres)
-
     const handleAddAnimeClick = (listId) => {
 
         addAnimeInList(listId, data, existingToken)
