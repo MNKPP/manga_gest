@@ -1,13 +1,13 @@
 import s from './MenuBurgerAnimeList.module.scss';
 import {useEffect, useState} from "react";
 import {fetchAnimeLists} from "../../services/anileList.service.js";
-import {CirclePlus} from "lucide-react";
+import {CirclePlus, XCircle} from "lucide-react";
 import InputListName from "../InputListName/InputListName.jsx";
 
 const MenuBurgerAnimeList = ({ clickListAction, openMenu, menuOpen }) => {
     const existingToken = localStorage.getItem("token");
-
     const [animeList, setAnimeList] = useState([]);
+    const [isAdd, setIsAdd] = useState(false);
 
     useEffect(() => {
         fetchAnimeLists(existingToken)
@@ -18,6 +18,10 @@ const MenuBurgerAnimeList = ({ clickListAction, openMenu, menuOpen }) => {
                 throw new Error(error.message);
             })
     }, [])
+
+    const handleAddAnime = () => {
+        setIsAdd(!isAdd);
+    }
 
     const onListClickAction = (id, listName) => {
         clickListAction(id, listName);
@@ -35,12 +39,14 @@ const MenuBurgerAnimeList = ({ clickListAction, openMenu, menuOpen }) => {
                         </div>
                     })}
                 </div>
-                <div className={s['button']}>
+                <div className={s['button']} onClick={handleAddAnime}>
                     <CirclePlus className={s['circlePlus']} size={30} />
                 </div>
-                {/*<div className={s['input-list-name']}>*/}
-                {/*    <InputListName />*/}
-                {/*</div>*/}
+                { isAdd &&
+                    <div className={s['input-list-name']}>
+                        <InputListName/>
+                    </div>
+                }
             </div>
         </>
     )

@@ -1,5 +1,21 @@
 import axios from "axios";
 
+export const addList = async (token, data) => {
+    let response;
+    try {
+        response = await axios.post(`http://localhost:8080/api/animeList`, data,{
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        console.log(response)
+    } catch (error) {
+        throw new Error(error);
+    }
+
+    return response;
+}
+
 export const fetchAnimeInList = async (id, token) => {
 
     let response;

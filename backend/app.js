@@ -7,6 +7,7 @@ import cors from 'cors';
 import mainRouter from "./routes/index.js";
 import db from './models/index.js';
 import { authTokenMiddleware } from "./middlewares/auth.middleware.js";
+import recommendationService from "./services/recommandation.service.js";
 
 const { NODE_ENV, PORT } = process.env;
 

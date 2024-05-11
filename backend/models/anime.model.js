@@ -23,7 +23,7 @@ export default  (sequelize) => {
             allowNull: true
         },
         synopsis: {
-            type: DataTypes.STRING(500),
+            type: DataTypes.STRING(3000),
             allowNull: false
         },
         trailer: {

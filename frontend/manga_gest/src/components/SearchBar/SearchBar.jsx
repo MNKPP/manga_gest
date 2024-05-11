@@ -1,5 +1,5 @@
 import s from './SearchBar.module.scss';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { fetchAnimeOnJikan } from "../../services/anime.service.js";
 
 const SearchBar = ({ onFoundedAnime, setIsFounded }) => {

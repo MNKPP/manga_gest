@@ -21,6 +21,7 @@ export const AnimeFoundedList = ({ animeList, setIsFounded, isFounded}) => {
                                           score={anime.score ? anime.score : 0}
                                           studio={anime.studios && anime.studios.length > 0 ? anime.studios[0].name : 'Unknown'}
                                           genres={anime.genres && anime.genres.length > 0 ? anime.genres.map(genre => genre.name + ' ') : ['Unknow']}
+                                          synopsis={anime.synopsis}
                                           totalEpisodes={anime.episodes}
                         />
                     )
@@ -31,7 +32,7 @@ export const AnimeFoundedList = ({ animeList, setIsFounded, isFounded}) => {
     )
 }
 
-export const AnimeFoundedItem = ({title, image, score, studio, genres, totalEpisodes}) => {
+export const AnimeFoundedItem = ({title, image, score, studio, genres, synopsis, totalEpisodes}) => {
     const existingToken = localStorage.getItem('token');
 
     const data = {
@@ -40,9 +41,12 @@ export const AnimeFoundedItem = ({title, image, score, studio, genres, totalEpis
         score: Math.round(score),
         studio,
         genre: genres?.join(', '),
-        synopsis: 'sdqflmjdsmfjsqmlfdjqsmdfkqsjml',
+        synopsis,
         episodes: totalEpisodes
     }
+
+    console.log(synopsis)
+    console.log(genres)
 
     const handleAddAnimeClick = (listId) => {
 
