@@ -1,4 +1,5 @@
 import animeService from "../services/anime.service.js";
+import recommendationService from "../services/recommandation.service.js";
 
 const animeController = {
     getById: async (req, res) => {
@@ -16,6 +17,23 @@ const animeController = {
 
         res.status(200)
             .json(anime);
+    },
+
+    getRecommendations: async (req, res) => {
+        const userId = req.token.id
+        console.log('user = ', userId)
+        const recommendations = await recommendationService.getRecommendations(userId);
+
+        if (!recommendations) {
+            res.status(404)
+                .json({
+                    errorMessage: 'No recommendations found.'
+                });
+            return;
+        }
+
+        res.status(200)
+            .json(recommendations);
     }
 }
 

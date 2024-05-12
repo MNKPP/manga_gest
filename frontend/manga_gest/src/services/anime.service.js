@@ -12,3 +12,13 @@ export const fetchAnimeOnJikan = async (searchBarText) => {
 
     return response;
 }
+
+export const fetchRecommandations = async (token) => {
+    const response = await axios.get('http://localhost:8080/api/anime/recommendation', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    return response;
+}

@@ -1,5 +1,5 @@
 import s from './Header.module.scss';
-import {Menu} from "lucide-react";
+import {Menu, Popcorn} from "lucide-react";
 import {useState} from "react";
 import MenuBurgerAnimeList from "../MenuBurgerAnimeList/MenuBurgerAnimeList.jsx";
 const Header = ({ clickListAction }) => {
@@ -12,10 +12,16 @@ const Header = ({ clickListAction }) => {
     return (
         <header className={s['header']}>
             <h1>Manga Gest</h1>
-            <div className={s['menu-logo']} onClick={openMenu}>
-                <Menu color={"#fff"}/>
+            <div className={s['right-logo']}>
+                <div>
+                    <Popcorn/>
+                </div>
+                <div className={s['menu-logo']} onClick={openMenu}>
+                    <Menu color={"#fff"}/>
+                </div>
             </div>
-            { menuOpen && <MenuBurgerAnimeList clickListAction={clickListAction} openMenu={openMenu} menuOpen={menuOpen} />}
+            {menuOpen &&
+                <MenuBurgerAnimeList clickListAction={clickListAction} openMenu={openMenu} menuOpen={menuOpen}/>}
         </header>
     )
 }

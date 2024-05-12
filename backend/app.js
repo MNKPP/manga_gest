@@ -36,13 +36,13 @@ app.use(authTokenMiddleware());
 
 app.use('/api', mainRouter);
 
-recommandationService.getRecommendations(1)
-    .then(response => {
-        console.log(response)
-    })
-    .catch(err => {
-        console.log(err)
-    })
+// recommandationService.getRecommendations(1)
+//     .then(response => {
+//         console.log(response)
+//     })
+//     .catch(err => {
+//         console.log(err)
+//     })
 
 app.listen(PORT, () => {
     console.log(`App Running on PORT ${PORT} ${NODE_ENV}`);

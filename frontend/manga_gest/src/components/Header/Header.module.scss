@@ -8,4 +8,8 @@
 	.menu-logo {
 		@apply p-3 cursor-pointer;
 	}
+
+	.right-logo {
+		@apply flex items-center justify-center text-white
+	}
 }

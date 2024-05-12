@@ -7,8 +7,8 @@ const ROLE = 'user';
 
 const animeRouter = express.Router();
 
-animeRouter.route('/:id')
-    .get(authorizeMiddleware(ROLE), animeController.getById);
+// animeRouter.route('/:id')
+//     .get(authorizeMiddleware(ROLE), animeController.getById);
 
 animeRouter.route('/:id/increment')
     .put(authorizeMiddleware(ROLE), episodeController.increment);
@@ -16,5 +16,7 @@ animeRouter.route('/:id/increment')
 animeRouter.route('/:id/decrement')
     .put(authorizeMiddleware(ROLE), episodeController.decrement);
 
+animeRouter.route('/recommendation')
+    .get(authorizeMiddleware(ROLE), animeController.getRecommendations);
 
 export default animeRouter;

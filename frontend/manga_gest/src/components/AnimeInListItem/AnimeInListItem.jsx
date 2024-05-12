@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { deleteAnimeInList, fetchAnimeInList } from "../../services/anileList.service.js";
 import { decrementEpisodes, incrementEpisodes } from "../../services/episode.service.js";
 import { CircleMinus, CirclePlus, CircleX, Star} from "lucide-react";
+import {fetchRecommandations} from "../../services/anime.service.js";
 
 
 const AnimeInListItem = ({ listId }) => {
@@ -20,6 +21,16 @@ const AnimeInListItem = ({ listId }) => {
                 throw new Error(error.message);
             })
     }, [listId, token]);
+
+    useEffect(() => {
+        fetchRecommandations(token)
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, []);
 
     const handleIncrementClick = (animeId, setEpisodeNb) => {
         incrementEpisodes(animeId, token)

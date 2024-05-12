@@ -1,5 +1,8 @@
 import db from "../models/index.js";
 import axios from "axios";
+import {AnimeDto} from "../dto/anime.dto.js";
+import natural from 'natural';
+const TfIdf = natural.TfIdf;
 
 const recommendationService = {
     getUserPreferences: async (userId) => {
@@ -47,7 +50,7 @@ const recommendationService = {
     scoreAnime: (anime, userProfile) => {
         let score = 0;
         if (anime && anime.genre) {
-            const genres = anime.genre.split(', '); // Split the genres string into an array
+            const genres = anime.genre.split(', ');
             for (let genre of genres) {
                 if (userProfile.has(genre)) {
                     score++;
@@ -58,16 +61,39 @@ const recommendationService = {
     },
 
     getRecommendations: async (userId) => {
+        const tfidf = new TfIdf();
+
         const userProfile = await recommendationService.getUserProfile(userId);
         const allAnimeDetails = await recommendationService.getAllAnimeDetails(userProfile);
         const animeList = allAnimeDetails.data;
+
+        // calculate tf-idf
+        animeList.forEach(anime => {
+            if (anime.synopsis) {
+                tfidf.addDocument(anime.synopsis);
+            }
+        });
+
         const scoredAnime = animeList.map(anime => {
-            return {anime: anime, score: recommendationService.scoreAnime(anime, userProfile)};
-        })
+            const animeDto = new AnimeDto(anime);
+            let scoreTfIdf = 0;
+
+            if (animeDto.synopsis) {
+                const terms = tfidf.listTerms(tfidf.documents.length - 1).slice(0, 10); // consider top 10 (can be adjusted) terms only
+                terms.forEach(term => {
+                    scoreTfIdf += term.tfidf;
+                });
+            }
+
+            return {
+                anime: animeDto,
+                score: recommendationService.scoreAnime(animeDto, userProfile) + scoreTfIdf // add score from tf-idf to the previous score
+            };
+        });
 
         scoredAnime.sort((a, b) => b.score - a.score);
 
-        return scoredAnime.slice(0, 10);
+        return scoredAnime.slice(0, 10); // return top 10 anime
     }
 }
 
