@@ -4,6 +4,7 @@ import SearchBar from "../components/SearchBar/SearchBar.jsx";
 import {useState} from "react";
 import {AnimeFoundedList} from "../components/DisplayAnimeFounded/AnimeFoundedList.jsx";
 import AnimeInListItem from "../components/AnimeInListItem/AnimeInListItem.jsx";
+import {AnimeRecommendationsList} from "../components/AnimeRecommendationList/AnimeRecommendationList.jsx";
 
 const Dashboard = () => {
     const [animeListFounded, setAnimeListFounded] = useState([]);
@@ -38,12 +39,7 @@ const Dashboard = () => {
                 setActiveView={setActiveView}
             />
             {activeView === 'anime' && isFounded && <AnimeFoundedList animeList={animeListFounded} isFounded={isFounded} setIsFounded={setIsFounded}/>}
-            {activeView === 'recommendations' && recommendations.map((recommendation, index) =>
-                <div key={index}>
-                    <h2>{recommendation.anime.title}</h2>
-                    <p>{recommendation.anime.synopsis}</p>
-                </div>
-            )}
+            {activeView === 'recommendations' && <AnimeRecommendationsList recommendations={recommendations}/>}
             <div>
                 <h2 className={s['list-name']}>{listName}</h2>
                 {!isFounded && <AnimeInListItem listId={listId}/>}

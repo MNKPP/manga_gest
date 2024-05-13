@@ -1,6 +1,5 @@
 import db from "../models/index.js";
 import axios from "axios";
-import { AnimeDto } from "../dto/anime.dto.js";
 import natural from 'natural';
 
 const TfIdf = natural.TfIdf;
@@ -135,9 +134,9 @@ const recommendationService = {
         }, new Array(documentVectors[0].length).fill(0)).map(val => val / userPreferences.length);
 
         const scoredAnime = (await Promise.all(allAnimeDetails.map(async (anime, index) => {
-            const animeDto = new AnimeDto(anime);
+            // const animeDto = new AnimeDto(anime);
             let similarityScore = 0;
-            let genreScore = recommendationService.scoreAnime(animeDto, await recommendationService.getUserProfile(userId));
+            let genreScore = recommendationService.scoreAnime(anime, await recommendationService.getUserProfile(userId));
             let vectorIndex = index + userPreferences.length;
 
             if (documentVectors[vectorIndex].length > 0) {
@@ -147,14 +146,14 @@ const recommendationService = {
             const totalScore = 0.1 * genreScore + 0.9 * similarityScore;
 
             return {
-                anime: animeDto,
+                anime,
                 score: totalScore,
                 similarityScore
             };
         })))
             .filter(item => item.similarityScore > 0)
             .sort((a, b) => b.score - a.score)
-            .slice(0, 10);
+            .slice(0, 5);
 
         return scoredAnime;
     }
