@@ -1,7 +1,7 @@
 import s from './MenuBurgerAnimeList.module.scss';
 import {useEffect, useState} from "react";
 import {fetchAnimeLists} from "../../services/anileList.service.js";
-import {CirclePlus, XCircle} from "lucide-react";
+import {CirclePlus} from "lucide-react";
 import InputListName from "../InputListName/InputListName.jsx";
 
 const MenuBurgerAnimeList = ({ clickListAction, openMenu, menuOpen }) => {

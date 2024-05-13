@@ -10,6 +10,8 @@ const Dashboard = () => {
     const [isFounded, setIsFounded] = useState(false);
     const [listId, setListId] = useState(null);
     const [listName, setListName] = useState(null);
+    const [recommendations, setRecommendations] = useState([]);
+    const [activeView, setActiveView] = useState('anime'); // Nouvel état pour gérer la vue
 
     const dataFounded = (data) => {
         if (data) {
@@ -23,10 +25,25 @@ const Dashboard = () => {
         setListName(listName)
     }
 
+    const handleNewRecommendations = (newRecommendations) => {
+        setRecommendations(newRecommendations);
+    }
+
     return (
         <PrivateLayout clickListAction={onListClickAction}>
-            <SearchBar onFoundedAnime={dataFounded} setIsFounded={setIsFounded} />
-            {isFounded && <AnimeFoundedList animeList={animeListFounded} isFounded={isFounded} setIsFounded={setIsFounded}/>}
+            <SearchBar
+                onFoundedAnime={dataFounded}
+                setIsFounded={setIsFounded}
+                onNewRecommendations={handleNewRecommendations}
+                setActiveView={setActiveView}
+            />
+            {activeView === 'anime' && isFounded && <AnimeFoundedList animeList={animeListFounded} isFounded={isFounded} setIsFounded={setIsFounded}/>}
+            {activeView === 'recommendations' && recommendations.map((recommendation, index) =>
+                <div key={index}>
+                    <h2>{recommendation.anime.title}</h2>
+                    <p>{recommendation.anime.synopsis}</p>
+                </div>
+            )}
             <div>
                 <h2 className={s['list-name']}>{listName}</h2>
                 {!isFounded && <AnimeInListItem listId={listId}/>}

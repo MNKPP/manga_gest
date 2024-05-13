@@ -22,15 +22,6 @@ const AnimeInListItem = ({ listId }) => {
             })
     }, [listId, token]);
 
-    useEffect(() => {
-        fetchRecommandations(token)
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }, []);
 
     const handleIncrementClick = (animeId, setEpisodeNb) => {
         incrementEpisodes(animeId, token)
