@@ -7,8 +7,7 @@
 	position: relative;
 
 	.x-circle {
-		@apply absolute top-8 right-16 cursor-pointer;
-
+		@apply absolute top-8 right-16 cursor-pointer text-red-600;
 	}
 }
 

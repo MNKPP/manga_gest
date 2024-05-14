@@ -1,8 +1,8 @@
 .menu-burger-anime-list {
-	@apply flex flex-col  justify-between fixed z-10 bg-white w-52 min-h-screen top-0 bottom-0 left-0 shadow-2xl;
+	@apply flex flex-col  justify-between fixed z-10 bg-white w-52 min-h-screen top-0 bottom-0 left-0 shadow-2xl ;
 
 	.anime-list {
-		@apply mt-5 w-full;
+		@apply mt-5 w-full text-xl p-2;
 		border-bottom: 1px solid gray;
 	}
 
