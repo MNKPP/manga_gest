@@ -1,0 +1,26 @@
+.anime-founded-list {
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 2rem 4rem;
+	position: relative;
+
+	.x-circle {
+		@apply absolute top-8 right-16 cursor-pointer;
+
+	}
+}
+
+.anime-founded-item {
+	@apply flex flex-row-reverse justify-between w-80 mt-3 pb-2 border-b-2 w-full;
+	border-bottom: 1px gray solid;
+
+	h3 {
+		@apply text-sm mr-3;
+	}
+
+	img {
+		@apply w-16 rounded;
+	}
+}

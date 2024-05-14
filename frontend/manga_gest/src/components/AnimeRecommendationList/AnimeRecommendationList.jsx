@@ -1,12 +1,21 @@
 import s from './AnimeRecommendationsList.module.scss'
-import AddToAnimeListButton from "../AddToAnimeListButton/AddToAnimeListButton.jsx";
-import {addAnimeInList} from "../../services/anileList.service.js";
 import {AnimeFoundedItem} from "../DisplayAnimeFounded/AnimeFoundedList.jsx";
+import {XCircle} from "lucide-react";
 
-export const AnimeRecommendationsList = ({ recommendations }) => {
+
+
+export const AnimeRecommendationsList = ({ recommendations, setActiveView }) => {
+
+    const handleDisplayed = () => {
+        setActiveView('anime');
+    };
+
     return (
         <div className={s['anime-founded-list']}>
             <h2>Recommandations</h2>
+            <div className={s['x-circle']}>
+                <XCircle onClick={handleDisplayed}/>
+            </div>
             {recommendations.map((recommendation, index) =>
                 <AnimeFoundedItem key={index}
                                   id={recommendation.anime.mal_id}

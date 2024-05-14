@@ -1,6 +1,7 @@
 import s from './AnimeFoundedList.module.scss';
 import AddToAnimeListButton from "../AddToAnimeListButton/AddToAnimeListButton.jsx";
 import {addAnimeInList} from "../../services/anileList.service.js";
+import {XCircle} from "lucide-react";
 
 export const AnimeFoundedList = ({ animeList, setIsFounded, isFounded}) => {
 
@@ -12,7 +13,10 @@ export const AnimeFoundedList = ({ animeList, setIsFounded, isFounded}) => {
         <>
             {isFounded &&
                 <div className={s['anime-founded-list']}>
-                    <button onClick={handleDisplayed}>X</button>
+                    <h2>Animés recherchés</h2>
+                    <div className={s['x-circle']}>
+                        <XCircle onClick={handleDisplayed} />
+                    </div>
                     {animeList.map((anime, index) =>
                         <AnimeFoundedItem key={index}
                                           id={anime.mal_id}
