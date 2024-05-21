@@ -34,7 +34,7 @@ const animeController = {
 
         res.status(200)
             .json(recommendations);
-    }
+    },
 }
 
 export default animeController;

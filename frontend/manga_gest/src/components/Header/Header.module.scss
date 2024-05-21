@@ -10,6 +10,11 @@
 	}
 
 	.right-logo {
-		@apply flex items-center justify-center text-white
+		@apply flex items-center justify-center text-white;
+
+		.avatar {
+			@apply bg-white h-10 w-10;
+			border-radius: 50%;
+		}
 	}
 }

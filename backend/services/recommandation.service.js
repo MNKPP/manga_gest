@@ -134,7 +134,6 @@ const recommendationService = {
         }, new Array(documentVectors[0].length).fill(0)).map(val => val / userPreferences.length);
 
         const scoredAnime = (await Promise.all(allAnimeDetails.map(async (anime, index) => {
-            // const animeDto = new AnimeDto(anime);
             let similarityScore = 0;
             let genreScore = recommendationService.scoreAnime(anime, await recommendationService.getUserProfile(userId));
             let vectorIndex = index + userPreferences.length;
@@ -143,7 +142,7 @@ const recommendationService = {
                 similarityScore = recommendationService.cosineSimilarity(userProfileVector, documentVectors[vectorIndex]);
             }
 
-            const totalScore = 0.1 * genreScore + 0.9 * similarityScore;
+            const totalScore = 0.3 * genreScore + 0.7 * similarityScore;
 
             return {
                 anime,

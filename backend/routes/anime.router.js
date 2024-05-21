@@ -19,4 +19,5 @@ animeRouter.route('/:id/decrement')
 animeRouter.route('/recommendation')
     .get(authorizeMiddleware(ROLE), animeController.getRecommendations);
 
+
 export default animeRouter;

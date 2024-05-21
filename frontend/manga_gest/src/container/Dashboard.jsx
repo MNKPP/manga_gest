@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { AnimeFoundedList } from "../components/DisplayAnimeFounded/AnimeFoundedList.jsx";
 import AnimeInListItem from "../components/AnimeInListItem/AnimeInListItem.jsx";
 import { AnimeRecommendationsList } from "../components/AnimeRecommendationList/AnimeRecommendationList.jsx";
+import { ToastContainer } from 'react-toastify';
 
 const Dashboard = () => {
     const [animeListFounded, setAnimeListFounded] = useState([]);
@@ -12,8 +13,8 @@ const Dashboard = () => {
     const [listId, setListId] = useState(null);
     const [listName, setListName] = useState(null);
     const [recommendations, setRecommendations] = useState([]);
-    const [activeView, setActiveView] = useState('anime'); // Nouvel état pour gérer la vue
-    const [shouldShowAnimeInListItem, setShouldShowAnimeInListItem] = useState(true); // Nouvel état pour gérer l'affichage de AnimeInListItem
+    const [activeView, setActiveView] = useState('anime');
+    const [shouldShowAnimeInListItem, setShouldShowAnimeInListItem] = useState(true);
 
     const dataFounded = (data) => {
         if (data) {
@@ -43,6 +44,7 @@ const Dashboard = () => {
                 onNewRecommendations={handleNewRecommendations}
                 setActiveView={setActiveView}
             />
+            <ToastContainer position="bottom-right" />
             {
                 activeView === 'anime' && isFounded &&
                 <AnimeFoundedList
