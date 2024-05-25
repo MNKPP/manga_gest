@@ -5,6 +5,7 @@ import { Popcorn } from "lucide-react";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ClipLoader } from 'react-spinners';
+import popcorn from '/public/popcorn.svg'
 
 const SearchBar = ({ onFoundedAnime, setIsFounded, onNewRecommendations, setActiveView }) => {
     const [searchData, setSearchData] = useState("");
@@ -57,8 +58,8 @@ const SearchBar = ({ onFoundedAnime, setIsFounded, onNewRecommendations, setActi
             <input type="text" placeholder="Rechercher un animé" onChange={handleInputChange} />
             <button type="submit">Rechercher</button>
             <div className="cursor-pointer" onClick={handleRecommendations}>
-                <Popcorn />
-                <img src="./public/" alt=""/>
+                {/*<Popcorn />*/}
+                <img src={popcorn} alt=""/>
             </div>
             {(isSearching || isFetchingRecommendations) &&
                 <div className={s['loading-spinner']}>
