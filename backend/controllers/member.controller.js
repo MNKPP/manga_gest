@@ -2,6 +2,8 @@ import memberService from "../services/member.service.js";
 import animeListService from "../services/animeList.service.js";
 import { memberLoginSchema, memberRegisterSchema } from "../validators/member.validator.js";
 import { generateToken } from "../utils/jwt.utils.js";
+import req from "express/lib/request.js";
+import res from "express/lib/response.js";
 
 
 const authController = {
@@ -69,6 +71,17 @@ const authController = {
 
         res.status(201)
             .json(validationData);
+    },
+
+    getById: async (req, res) => {
+        const memberId = req.token.id;
+
+        try {
+            const member = await memberService.getById(memberId);
+            res.status(200).json(member);
+        } catch (error) {
+            res.status(404).json({ errorMessage: 'Member not found' });
+        }
     }
 }
 

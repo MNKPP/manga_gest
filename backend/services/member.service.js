@@ -36,6 +36,10 @@ const memberService = {
 
     checkEmail: async (email) => {
         return await db.Member.findOne({ where: { email }});
+    },
+
+    getById: async (id) => {
+        return await db.Member.findByPk(id);
     }
 }
 

@@ -1,4 +1,3 @@
-// Header.jsx
 import s from './Header.module.scss';
 import {Menu} from "lucide-react";
 import {useState} from "react";

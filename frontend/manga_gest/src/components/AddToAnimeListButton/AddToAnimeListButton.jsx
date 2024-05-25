@@ -1,8 +1,10 @@
+import s from './AddToAnimeListButton.module.scss'
 import { useEffect, useState } from 'react';
 import { fetchAnimeLists } from '../../services/anileList.service.js';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ClipLoader } from 'react-spinners';
+import { CirclePlus } from "lucide-react";
 
 const AddToAnimeListButton = ({ addAnimeClick }) => {
     const existingToken = localStorage.getItem("token");
@@ -38,18 +40,18 @@ const AddToAnimeListButton = ({ addAnimeClick }) => {
     }
 
     return (
-        <>
-            <button onClick={addToAnimeAction}>Ajouter</button>
+        <div className={s['container-button']}>
+            <CirclePlus color={"#3498db"} onClick={addToAnimeAction}/>
             {isLoadingLists ? (
                 <ClipLoader color={"#3498db"} loading={isLoadingLists} size={30} />
             ) : (
-                <select name="input-select" id="anime-list" onChange={receiveLisId}>
+                <select className={s['select']} name="input-select" id="anime-list" onChange={receiveLisId}>
                     {animeLists.map((list) => (
                         <option key={list.id} value={list.id}>{list.name}</option>
                     ))}
                 </select>
             )}
-        </>
+        </div>
     );
 };
 

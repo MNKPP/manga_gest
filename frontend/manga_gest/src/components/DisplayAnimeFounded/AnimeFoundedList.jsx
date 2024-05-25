@@ -47,13 +47,12 @@ export const AnimeFoundedItem = ({ title, image, score, studio, genres, synopsis
         studio,
         genre: genres?.join(', '),
         synopsis,
-        episodes: totalEpisodes
+        episodes: totalEpisodes || 1100
     }
 
     const handleAddAnimeClick = (listId) => {
         return addAnimeInList(listId, data, existingToken)
             .then(response => {
-                // Handle successful response if needed
             })
             .catch(error => {
                 throw new Error('Error adding anime item', error.message);
@@ -64,10 +63,10 @@ export const AnimeFoundedItem = ({ title, image, score, studio, genres, synopsis
         <div className={s['anime-founded-item']}>
             <img src={image} alt={title} />
             <div>
-                <h3>{title}</h3>
-                <p>Studio : {studio}</p>
-                <p>Score : {score}</p>
-                <p>{genres}</p>
+                <h3 className={s['h3-title']}>{title}</h3>
+                <p><span>Studio :</span>{studio}</p>
+                <p><span>Score :</span> {score}</p>
+                <p><span>{genres}</span></p>
                 <AddToAnimeListButton addAnimeClick={handleAddAnimeClick} />
             </div>
         </div>

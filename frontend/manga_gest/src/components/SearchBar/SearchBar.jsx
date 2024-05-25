@@ -58,6 +58,7 @@ const SearchBar = ({ onFoundedAnime, setIsFounded, onNewRecommendations, setActi
             <button type="submit">Rechercher</button>
             <div className="cursor-pointer" onClick={handleRecommendations}>
                 <Popcorn />
+                <img src="./public/" alt=""/>
             </div>
             {(isSearching || isFetchingRecommendations) &&
                 <div className={s['loading-spinner']}>
