@@ -64,7 +64,7 @@ const Dashboard = () => {
                 !isFounded && shouldShowAnimeInListItem &&
                 <div>
                     <h2 className={s['list-name']}>{listName}</h2>
-                    <AnimeInListItem listId={listId} />
+                    <AnimeInListItem listId={listId} titleList={listName} />
                 </div>
             }
         </PrivateLayout>
