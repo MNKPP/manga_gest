@@ -22,5 +22,8 @@ memberRouter.route('/')
     .get(authorizeMiddleware(ROLE), animeListController.getAll)
     .post(authorizeMiddleware(ROLE) ,animeListController.add)
 
+memberRouter.route('/addToFavorite/:id')
+    .post(authorizeMiddleware(ROLE), animeListController.addToFavorite)
+
 
 export default memberRouter;

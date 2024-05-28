@@ -1,36 +1,51 @@
 .modal-overlay {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 5;
-	background-color: rgba(0, 0, 0, 0.5);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 4rem;
+	@apply fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex justify-center items-center p-16;
+	z-index: 1;
 }
 
 .modal {
-	background: white;
-	padding: 20px;
-	border-radius: 5px;
-	max-width: 500px;
-	width: 100%;
+	@apply relative bg-white p-8 rounded-lg max-w-md w-full shadow-lg;
+
+	label {
+		@apply block mb-2 font-bold;
+	}
+
+	input {
+		@apply w-full p-2 mb-6 border border-gray-300 rounded;
+	}
+
+	.avatar-container {
+		@apply mb-6 text-center;
+	}
+
+	.avatar {
+		@apply w-24 h-24 rounded-full object-cover mb-4;
+	}
+
+	button {
+		@apply mt-2 px-4 py-2 border-none rounded cursor-pointer;
+	}
+
+	button[type="button"] {
+		@apply bg-blue-500 text-white hover:bg-blue-700;
+	}
+
+	button + button {
+		@apply ml-2;
+	}
+}
+
+.close-button {
+	@apply absolute top-2 right-2 bg-none border-none cursor-pointer text-2xl;
+	color: crimson;
+}
+
+h2 {
+	@apply mb-6;
 }
 
 .form-group {
-	margin-bottom: 15px;
+	@apply mb-6;
 }
 
-label {
-	display: block;
-	margin-bottom: 5px;
-}
 
-input {
-	width: 100%;
-	padding: 8px;
-	box-sizing: border-box;
-}

@@ -10,7 +10,7 @@
 	}
 
 	.right-logo {
-		@apply flex items-center justify-center text-white;
+		@apply flex items-center justify-center text-white mr-4;
 
 		.avatar {
 			@apply bg-white h-10 w-10;

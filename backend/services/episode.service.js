@@ -1,5 +1,5 @@
 import db from '../models/index.js';
-import {EpisodeDto} from "../dto/episode.dto.js";
+import { EpisodeDto } from "../dto/episode.dto.js";
 
 const episodeService = {
     increment: async (memberId, animeId) => {
@@ -10,7 +10,7 @@ const episodeService = {
             }
         });
 
-        if(!episode) {
+        if (!episode) {
             throw new Error(`Cannot find episode`);
         }
 
@@ -95,30 +95,76 @@ const episodeService = {
 
     addEpisodeOnAddingAnime: async (memberId, animeId, totalEpisodes, listName) => {
 
-            let episode;
-            switch (listName) {
-                case 'A voir':
-                    episode = await db.Episode.create({memberId, animeId, watchedEpisode: 0, totalEpisodes });
-                    break;
-                case 'En cours':
-                    episode = await db.Episode.create({memberId, animeId, watchedEpisode: 1, totalEpisodes });
-                    break;
-                case 'Terminé':
-                    episode = await db.Episode.create({memberId, animeId, watchedEpisode: totalEpisodes, totalEpisodes });
-                    break;
-                case 'Favoris':
-                    episode = await db.Episode.create({memberId, animeId, watchedEpisode: totalEpisodes, totalEpisodes });
-                    break;
-                default :
-                    episode = await db.Episode.create({memberId, animeId, watchedEpisode: 0, totalEpisodes });
-            }
+        let episode;
+        switch (listName) {
+            case 'A voir':
+                episode = await db.Episode.create({ memberId, animeId, watchedEpisode: 0, totalEpisodes });
+                break;
+            case 'En cours':
+                episode = await db.Episode.create({ memberId, animeId, watchedEpisode: 1, totalEpisodes });
+                break;
+            case 'Terminé':
+                episode = await db.Episode.create({ memberId, animeId, watchedEpisode: totalEpisodes, totalEpisodes });
+                break;
+            case 'Favoris':
+                episode = await db.Episode.create({ memberId, animeId, watchedEpisode: totalEpisodes, totalEpisodes });
+                break;
+            default:
+                episode = await db.Episode.create({ memberId, animeId, watchedEpisode: 0, totalEpisodes });
+        }
 
-            if (!episode) {
-                throw new Error(`Cannot find episode`);
-            }
+        if (!episode) {
+            throw new Error(`Cannot create episode`);
+        }
 
-            return new EpisodeDto(episode);
-        },
+        return new EpisodeDto(episode);
+    },
+
+    addToFavorite: async (memberId, animeId) => {
+
+        const anime = await db.Anime.findOne({ where: { id: animeId } });
+
+        if (!anime) {
+            throw new Error('Cannot find Anime');
+        }
+
+        const favoriteList = await db.AnimeList.findOne({
+            where: {
+                name: 'Favoris',
+                memberId
+            }
+        });
+
+        if (!favoriteList) {
+            throw new Error('Cannot find favoriteList');
+        }
+
+        const favoriteAnime = await db.Anime.create({
+            title: anime.title,
+            studio: anime.studio,
+            genre: anime.genre,
+            image: anime.image,
+            score: anime.score,
+            synopsis: anime.synopsis,
+            trailer: anime.trailer,
+            animeListId: favoriteList.id
+        });
+
+        if (!favoriteAnime) {
+            throw new Error('Cannot create favorite anime');
+        }
+
+        const episodes = await db.Episode.findAll({ where: { animeId } });
+
+        for (const episode of episodes) {
+            await db.Episode.create({
+                memberId,
+                animeId: favoriteAnime.id,
+                watchedEpisode: episode.watchedEpisode,
+                totalEpisodes: episode.totalEpisodes
+            });
+        }
     }
+}
 
 export default episodeService;

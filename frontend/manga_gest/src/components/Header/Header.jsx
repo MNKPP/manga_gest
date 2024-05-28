@@ -20,10 +20,10 @@ const Header = ({ clickListAction, openRecommandation }) => {
         <header className={s['header']}>
             <h1>Manga Gest</h1>
             <div className={s['right-logo']}>
-                <div className={s['avatar']} onClick={onOpenMemberConfig}></div>
                 <div className={s['menu-logo']} onClick={openMenu}>
                     <Menu color={"#fff"}/>
                 </div>
+                <div className={s['avatar']} onClick={onOpenMemberConfig}></div>
             </div>
             {menuOpen &&
                 <MenuBurgerAnimeList clickListAction={clickListAction} openMenu={openMenu} menuOpen={menuOpen}/>}

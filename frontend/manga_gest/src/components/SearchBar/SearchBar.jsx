@@ -1,11 +1,11 @@
 import s from './SearchBar.module.scss';
 import { useState } from "react";
 import { fetchAnimeOnJikan, fetchRecommandations } from "../../services/anime.service.js";
-import { Popcorn } from "lucide-react";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ClipLoader } from 'react-spinners';
-import popcorn from '/public/popcorn.svg'
+import popcorn from '/public/popcorn.svg';
+import { Tooltip } from 'react-tooltip';
 
 const SearchBar = ({ onFoundedAnime, setIsFounded, onNewRecommendations, setActiveView }) => {
     const [searchData, setSearchData] = useState("");
@@ -57,10 +57,12 @@ const SearchBar = ({ onFoundedAnime, setIsFounded, onNewRecommendations, setActi
         <form className={s['input-container']} onSubmit={handleFoundAnime}>
             <input type="text" placeholder="Rechercher un animé" onChange={handleInputChange} />
             <button type="submit">Rechercher</button>
-            <div className="cursor-pointer" onClick={handleRecommendations}>
-                {/*<Popcorn />*/}
-                <img src={popcorn} alt=""/>
+            <div className="cursor-pointer" onClick={handleRecommendations} data-tooltip-id="popcorn-tooltip">
+                <img src={popcorn} alt="Popcorn" />
             </div>
+            <Tooltip id="popcorn-tooltip" place="top" effect="solid">
+                Recommandation
+            </Tooltip>
             {(isSearching || isFetchingRecommendations) &&
                 <div className={s['loading-spinner']}>
                     <ClipLoader color={"#3498db"} loading={true} size={30} />

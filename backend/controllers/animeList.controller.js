@@ -1,6 +1,7 @@
 import animeListService from "../services/animeList.service.js";
 import { animeListValidator } from "../validators/animeList.validator.js";
 import {animeValidator} from "../validators/anime.validator.js";
+import episodeService from "../services/episode.service.js";
 
 const animeListController = {
 
@@ -187,6 +188,20 @@ const animeListController = {
 
         res.status(200)
             .json(animeList);
+    },
+
+    addToFavorite: async (req, res) => {
+        const animeId = req.params.id;
+        const memberId = req.token.id;
+
+        try {
+            await episodeService.addToFavorite(memberId, animeId);
+            res.status(204)
+                .send();
+        } catch (e) {
+            res.status(400)
+                .json({ errorMessage: e.message });
+        }
     },
 }
 
