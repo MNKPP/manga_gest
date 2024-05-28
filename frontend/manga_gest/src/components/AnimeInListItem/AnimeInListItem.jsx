@@ -1,10 +1,10 @@
 import s from './AnimeInListItem.module.scss';
 import { useEffect, useState } from "react";
-import { deleteAnimeInList, fetchAnimeInList } from "../../services/anileList.service.js";
+import {addToFavorites, deleteAnimeInList, fetchAnimeInList} from "../../services/anileList.service.js";
 import { decrementEpisodes, incrementEpisodes } from "../../services/episode.service.js";
 import { CircleMinus, CirclePlus, CircleX, Star} from "lucide-react";
-import {fetchRecommandations} from "../../services/anime.service.js";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AnimeInListItem = ({ listId }) => {
     const [animeInList, setAnimeInList] = useState(null);
@@ -21,7 +21,6 @@ const AnimeInListItem = ({ listId }) => {
                 throw new Error(error.message);
             })
     }, [listId, token]);
-
 
     const handleIncrementClick = (animeId, setEpisodeNb) => {
         incrementEpisodes(animeId, token)
@@ -77,7 +76,6 @@ const AnimeInListItem = ({ listId }) => {
             })
     }
 
-
     return (
         <div className={s['anime-list']}>
             {animeInList && animeInList.map(anime => (
@@ -92,6 +90,7 @@ const AnimeInListItem = ({ listId }) => {
                     handleDeleteClick={handleDeleteClick}
                 />
             ))}
+            <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
         </div>
     );
 }
@@ -99,9 +98,22 @@ const AnimeInListItem = ({ listId }) => {
 const AnimeItem = ({titleList, id, image, title, episode, handleIncrementClick, handleDecrementClick, handleDeleteClick}) => {
     const [episodeNb, setEpisodeNb] = useState(episode[0].watchedEpisode);
 
+    const token = localStorage.getItem('token')
+
     const onIncrement = () => handleIncrementClick(id, setEpisodeNb);
     const onDecrement = () => handleDecrementClick(id, setEpisodeNb);
     const onDeleteClick = () => handleDeleteClick(id);
+
+    const handleAddToFavorites = (id) => {
+        addToFavorites(id, token)
+            .then((response) => {
+                toast.success("Animé ajouté aux favoris");
+            })
+            .catch((error) => {
+                toast.error("Failed to add anime to favorites.");
+                throw new Error(error.message);
+            });
+    }
 
     return (
         <div className={s['anime-in-list-item']}>
@@ -111,7 +123,7 @@ const AnimeItem = ({titleList, id, image, title, episode, handleIncrementClick, 
                 <div className={s['title']}>
                     <h2>{title}</h2>
                     <div className={s['logo-buttons']}>
-                        <Star className={s['star']}/>
+                        <Star className={s['star']} onClick={() => handleAddToFavorites(id)}/>
                         <CircleX className={s['circleX']} onClick={onDeleteClick}/>
                     </div>
                 </div>

@@ -121,7 +121,6 @@ const episodeService = {
     },
 
     addToFavorite: async (memberId, animeId) => {
-
         const anime = await db.Anime.findOne({ where: { id: animeId } });
 
         if (!anime) {
@@ -137,6 +136,17 @@ const episodeService = {
 
         if (!favoriteList) {
             throw new Error('Cannot find favoriteList');
+        }
+
+        const existingFavorite = await db.Anime.findOne({
+            where: {
+                title: anime.title,
+                animeListId: favoriteList.id
+            }
+        });
+
+        if (existingFavorite) {
+            throw new Error('Anime is already in the favorite list');
         }
 
         const favoriteAnime = await db.Anime.create({

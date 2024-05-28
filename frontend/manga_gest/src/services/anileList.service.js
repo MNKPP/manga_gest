@@ -79,3 +79,18 @@ export const deleteAnimeInList = async (id, animeId, token) => {
 
     return response;
 }
+
+export const addToFavorites = async (animeId, token) => {
+    let response;
+    try {
+        response = await axios.post(`http://localhost:8080/api/animeList/addToFavorite/${animeId}`, { animeId }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+    } catch (error) {
+        throw new Error(error.message);
+    }
+
+    return response;
+}
