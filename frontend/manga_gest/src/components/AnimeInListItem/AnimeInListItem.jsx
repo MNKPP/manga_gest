@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AnimeInListItem = ({ listId, titleList }) => {
-    const [animeInList, setAnimeInList] = useState(null);
+    const [animeInList, setAnimeInList] = useState([]);
     const [animeIds, setAnimeIds] = useState(new Set());
 
     const token = localStorage.getItem("token");
@@ -15,66 +15,80 @@ const AnimeInListItem = ({ listId, titleList }) => {
     useEffect(() => {
         fetchAnimeInList(listId, token)
             .then(({ data }) => {
-                setAnimeInList(data);
+                setAnimeInList(data.filter(anime => anime.id && anime.image && anime.title && anime.Episodes));
             })
             .catch((error) => {
-                throw new Error(error.message);
-            })
+                console.error(error.message);
+            });
     }, [listId, token]);
 
     const handleIncrementClick = (animeId, setEpisodeNb) => {
         incrementEpisodes(animeId, token)
             .then(({ data }) => {
-                setEpisodeNb(data.watchedEpisode)
-                setAnimeInList(() => {
+                setEpisodeNb(data.watchedEpisode);
+                setAnimeInList(prevAnimeInList => {
                     if (data.watchedEpisode === data.totalEpisodes || data.watchedEpisode === 1) {
                         setAnimeIds(animeIds => {
                             const newSet = new Set(animeIds);
                             newSet.add(animeId);
                             return newSet;
-                        })
-                        return animeInList.filter((anime) => anime.id !== animeId);
+                        });
+                        return prevAnimeInList.filter((anime) => anime.id !== animeId);
                     }
-                    return animeInList
-                })
+                    return prevAnimeInList.map(anime =>
+                        anime.id === animeId ? { ...anime, Episodes: [{ ...anime.Episodes[0], watchedEpisode: data.watchedEpisode }] } : anime
+                    );
+                });
             })
             .catch(error => {
-                throw new Error(error.message);
-            })
-    }
+                console.error(error.message);
+            });
+    };
 
     const handleDecrementClick = (animeId, setEpisodeNb) => {
         decrementEpisodes(animeId, token)
             .then(({ data }) => {
-                setEpisodeNb(data.watchedEpisode)
-                setAnimeInList(() => {
-                    if (data.watchedEpisode < data.totalEpisodes && animeIds.has(animeId) || data.watchedEpisode === 0 && animeIds.has(animeId)) {
+                setEpisodeNb(data.watchedEpisode);
+                setAnimeInList(prevAnimeInList => {
+                    if ((data.watchedEpisode < data.totalEpisodes && animeIds.has(animeId)) || (data.watchedEpisode === 0 && animeIds.has(animeId))) {
                         setAnimeIds(animeIds => {
                             const newSet = new Set(animeIds);
                             newSet.delete(animeId);
                             return newSet;
-                        })
-                        return animeInList.filter((anime) => anime.id !== animeId);
+                        });
+                        return prevAnimeInList.filter((anime) => anime.id !== animeId);
                     }
-                    return animeInList;
-                })
+                    return prevAnimeInList.map(anime =>
+                        anime.id === animeId ? { ...anime, Episodes: [{ ...anime.Episodes[0], watchedEpisode: data.watchedEpisode }] } : anime
+                    );
+                });
             })
             .catch(error => {
-                throw new Error(error.message);
-            })
-    }
+                console.error(error.message);
+            });
+    };
 
     const handleDeleteClick = (animeId) => {
         deleteAnimeInList(listId, animeId, token)
-            .then((response) => {
-                setAnimeInList(currentAnimeInList => {
-                    return currentAnimeInList.filter(anime => anime.id !== animeId);
-                });
+            .then(() => {
+                setAnimeInList(prevAnimeInList => prevAnimeInList.filter(anime => anime.id !== animeId));
             })
             .catch((error) => {
-                throw new Error(error.message);
+                console.error(error.message);
+            });
+    };
+
+    const handleAddAnime = (anime) => {
+        addAnimeToList(listId, anime, token)
+            .then(({ data }) => {
+                setAnimeInList(prevAnimeInList => [...prevAnimeInList, data]);
+                toast.success("Animé ajouté à la liste !");
             })
-    }
+            .catch((error) => {
+                toast.error("Échec de l'ajout de l'animé à la liste.");
+                console.error(error.message);
+            });
+    };
 
     return (
         <div className={s['anime-list']}>
@@ -94,11 +108,10 @@ const AnimeInListItem = ({ listId, titleList }) => {
             <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
         </div>
     );
-}
-
+};
 
 const AnimeItem = ({ titleList, id, image, title, episode, handleIncrementClick, handleDecrementClick, handleDeleteClick }) => {
-    const [episodeNb, setEpisodeNb] = useState(episode[0].watchedEpisode);
+    const [episodeNb, setEpisodeNb] = useState(episode && episode.length > 0 ? episode[0].watchedEpisode : 0);
 
     const token = localStorage.getItem('token');
 
@@ -108,13 +121,17 @@ const AnimeItem = ({ titleList, id, image, title, episode, handleIncrementClick,
 
     const handleAddToFavorites = (id) => {
         addToFavorites(id, token)
-            .then((response) => {
+            .then(() => {
                 toast.success("Animé ajouté aux favoris");
             })
             .catch((error) => {
-                toast.error("Failed to add anime to favorites.");
-                throw new Error(error.message);
+                toast.error("Échec de l'ajout de l'animé aux favoris.");
+                console.error(error.message);
             });
+    };
+
+    if (!image || !title || !episode || episode.length === 0) {
+        return null;
     }
 
     return (
@@ -143,7 +160,6 @@ const AnimeItem = ({ titleList, id, image, title, episode, handleIncrementClick,
             </div>
         </div>
     );
-}
+};
 
-export default AnimeItem;
-
+export default AnimeInListItem;
