@@ -59,7 +59,7 @@ const ModalConfig = ({ isOpen, onClose, setAvatar }) => {
                         <div className={s['user-infos']}>
                             <span>Utilisateur :</span>
                             <p>{userDetails.username}</p>
-                            <span>Email :</span>
+                            <span>Email : </span>
                             <p>{userDetails.email}</p>
                         </div>
                     ) : (
