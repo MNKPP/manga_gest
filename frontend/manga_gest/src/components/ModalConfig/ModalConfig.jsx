@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import s from './ModalConfig.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { XCircle } from "lucide-react";
+import {memberDetails} from "../../services/member.service.js";
 
 const ModalConfig = ({ isOpen, onClose, setAvatar }) => {
     const [localAvatar, setLocalAvatar] = useState(null);
+    const [userDetails, setUserDetails] = useState(null);
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+
+    useEffect(() => {
+            if (token) {
+                memberDetails(token)
+                    .then(response => {
+                        setUserDetails(response.data)
+                    });
+            }
+    }, []);
 
     if (!isOpen) return null;
 
@@ -21,7 +33,7 @@ const ModalConfig = ({ isOpen, onClose, setAvatar }) => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setLocalAvatar(reader.result);
-                setAvatar(reader.result); // Mettre à jour l'avatar dans le header
+                setAvatar(reader.result);
             };
             reader.readAsDataURL(file);
         }
@@ -43,13 +55,21 @@ const ModalConfig = ({ isOpen, onClose, setAvatar }) => {
                         )}
                         <input type="file" accept="image/*" onChange={handleAvatarChange} />
                     </div>
-                    <p>MNKPP</p>
-                    <p>Email</p>
+                    {userDetails ? (
+                        <div className={s['user-infos']}>
+                            <span>Utilisateur :</span>
+                            <p>{userDetails.username}</p>
+                            <span>Email :</span>
+                            <p>{userDetails.email}</p>
+                        </div>
+                    ) : (
+                        <p>Chargement des détails...</p>
+                    )}
                     <button type="button" onClick={handleLogout}>Déconnexion</button>
                 </form>
             </div>
         </div>
     );
-}
+};
 
 export default ModalConfig;

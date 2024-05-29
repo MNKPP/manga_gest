@@ -103,6 +103,7 @@ const AnimeInListItem = ({ listId, titleList }) => {
                     handleIncrementClick={handleIncrementClick}
                     handleDeleteClick={handleDeleteClick}
                     titleList={titleList}
+                    genres={anime.genre}
                 />
             ))}
             <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
@@ -110,7 +111,7 @@ const AnimeInListItem = ({ listId, titleList }) => {
     );
 };
 
-const AnimeItem = ({ titleList, id, image, title, episode, handleIncrementClick, handleDecrementClick, handleDeleteClick }) => {
+const AnimeItem = ({genres, titleList, id, image, title, episode, handleIncrementClick, handleDecrementClick, handleDeleteClick }) => {
     const [episodeNb, setEpisodeNb] = useState(episode && episode.length > 0 ? episode[0].watchedEpisode : 0);
 
     const token = localStorage.getItem('token');

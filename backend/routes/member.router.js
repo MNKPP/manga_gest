@@ -16,4 +16,5 @@ memberRouter.get('/protected', authorizeMiddleware('user') , async (req, res) =>
 
 memberRouter.route('/member')
     .get(authorizeMiddleware('user'), memberController.getById)
+
 export default memberRouter;

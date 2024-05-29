@@ -6,6 +6,18 @@
 .modal {
 	@apply relative bg-white p-8 rounded-lg max-w-md w-full shadow-lg;
 
+	.user-infos {
+		@apply mb-8;
+
+		span {
+			@apply font-bold
+		}
+
+		p {
+			@apply text-sm mb-2;
+		}
+	}
+
 	label {
 		@apply block mb-2 font-bold;
 	}

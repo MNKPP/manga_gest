@@ -75,7 +75,7 @@ const authController = {
 
     getById: async (req, res) => {
         const memberId = req.token.id;
-
+        console.log(memberId)
         try {
             const member = await memberService.getById(memberId);
             res.status(200).json(member);
